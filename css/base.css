@@ -1,0 +1,36 @@
+:root {
+  --verde: #173E30;
+  --fundo: #F7F8F1;
+  --amarelo: #F5CE46;
+  --texto: #173E30;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--fundo);
+  color: var(--texto);
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--verde);
+  outline-offset: 3px;
+}

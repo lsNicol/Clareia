@@ -1,0 +1,50 @@
+header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px 32px;
+  min-height: 96px;
+  padding: 16px clamp(16px, 5vw, 80px);
+}
+
+.clareia-logo img {
+  height: 50px;
+  width: auto;
+}
+
+header nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 32px;
+}
+
+header nav a {
+  text-decoration: none;
+  font-weight: 500;
+}
+
+header nav a:hover {
+  text-decoration: underline;
+}
+
+header nav a.btn-conta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  border: 2px solid var(--verde);
+  border-radius: 100px;
+  font-weight: 600;
+}
+
+header nav a.btn-conta:hover {
+  background-color: var(--verde);
+  color: var(--fundo);
+  text-decoration: none;
+}
+
+header nav a.btn-conta:hover img {
+  filter: invert(1);
+}
