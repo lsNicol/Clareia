@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,8 +14,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
 
     <link href="/css/base.css" rel="stylesheet">
     <link href="/css/header.css" rel="stylesheet">
@@ -37,22 +36,79 @@
     </header>
 
     <main>
-
       <div class="main-container">
-        <span class="linespan">
-          <img src="/img/ponto-amarelo.svg" alt="" widht="8" height="8">
-          <h5>MENOS COMPLICAÇÂO. MAIS CLAREZA</h5>
+        <span class="eyebrow">
+          <img src="/img/ponto-amarelo.svg" alt="" width="8" height="8">
+          MENOS COMPLICAÇÃO. MAIS CLAREZA.
         </span>
-        <h1>Sua conta de luz, mais clara.</h1>
-        <p>Entenda o que você paga, acompanhe seu consumo e descubra onde 
+        <h1>Sua conta de luz,<br>mais clara.</h1>
+        <p>Entenda o que você paga, acompanhe seu consumo e descubra onde
           prestar atenção. Com uma ajudinha da IA, sem complicar.</p>
+        <div class="area-de-envio">
+          <div class="drag-file">
+            <img src="/img/doc.svg" alt="">
+            <div class="textos">
+              <span class="titulo">Arraste sua conta ou <label for="arquivo">escolha um arquivo</label></span>
+              <input type="file" id="arquivo" class="sr-only" accept=".pdf,.jpg,.jpeg,.png">
+              <p>PDF, JPG ou PNG • até 10 MB</p>
+            </div>
+          </div>
+          <button class="btn-envio" type="button">
+            <img src="/img/upload.svg" alt="" width="18" height="18">
+            <span>Enviar minha conta</span>
+            <img src="/img/seta2.svg" alt="" width="18" height="18">
+          </button>
+          <p class="dica">
+            <img src="/img/safety.svg" alt="" width="15" height="15">
+            Antes de enviar, oculte CPF, endereço e código do cliente.
+          </p>
+        </div>
+        <p class="nota">Para contas residenciais, como as da CEMIG.
+          Serviço independente, sem vínculo com distribuidoras.</p>
       </div>
-      <div class="main-container">
-        <span class="linespan">
-          <img src="/img/ponto-amarelo.svg" alt="" widht="8" height="8">
-          <h5>Um pouco mais de clareza</h5>
+
+      <aside aria-label="Exemplo de conta traduzida">
+        <span class="eyebrow">
+          <img src="/img/estrela.svg" alt="" width="16" height="16">
+          UM POUCO MAIS DE CLAREZA
         </span>
-      </div>
+        <div class="exemplo">
+          <article class="card">
+            <div class="card-topo">
+              <div>
+                <h2>Sua conta, traduzida.</h2>
+                <p>Outubro de 2026 • Residencial</p>
+              </div>
+              <span class="selo">Exemplo fictício</span>
+            </div>
+            <div class="blocos">
+              <div class="bloco">
+                <p>Energia consumida</p>
+                <strong class="valor">248 kWh</strong>
+              </div>
+              <div class="bloco">
+                <p>Total da conta</p>
+                <strong class="valor">R$ 231,46</strong>
+              </div>
+            </div>
+            <img src="/img/grafico.svg" width="470" height="170"
+                 alt="Gráfico do consumo em kWh de maio a outubro: 186, 215, 204, 238, 221 e 248">
+            <div class="resumo">
+              <img src="/img/lamp.svg" alt="" width="22" height="22">
+              <div>
+                <strong>O consumo subiu 12% em relação a setembro.</strong>
+                <p>Vale observar mudanças na rotina e no uso de aparelhos.
+                  Isso não indica, por si só, um erro na conta.</p>
+              </div>
+            </div>
+          </article>
+          <p class="aviso">
+            <img src="/img/caution.svg" alt="" width="18" height="18">
+            Dados ilustrativos. Não representam uma análise real.
+          </p>
+        </div>
+      </aside>
     </main>
+    <script src="/js/drop-file.js" defer></script>
   </body>
 </html>
