@@ -19,6 +19,7 @@
     <link href="/Clareia/css/base.css" rel="stylesheet">
     <link href="/Clareia/css/header.css" rel="stylesheet">
     <link href="/Clareia/css/index.css" rel="stylesheet">
+    <link href="/Clareia/css/como-funciona.css" rel="stylesheet">
   </head>
   <body>
     <header>
@@ -64,11 +65,11 @@
           </button>
           <p class="dica">
             <img src="/Clareia/img/safety.svg" alt="" width="15" height="15">
-            Antes de enviar, oculte CPF, endereço e código do cliente.
-          </p>
+            Antes de enviar, oculte CPF, endereço e código do cliente.          </p>
         </div>
         <p class="nota">Para contas residenciais, como as da CEMIG.
           Serviço independente, sem vínculo com distribuidoras.</p>
+        <a href="#como-funciona">Ver como funciona</a>
       </div>
 
       <aside aria-label="Exemplo de conta traduzida">
@@ -113,6 +114,54 @@
         </div>
       </aside>
     </main>
+
+    <section class="como-funciona" id="como-funciona" aria-labelledby="como-funciona-titulo">
+      <span class="eyebrow">
+        <img src="/Clareia/img/ponto-amarelo.svg" alt="" width="8" height="8">
+        COMO FUNCIONA
+      </span>
+      <h2 id="como-funciona-titulo">Veja cada passo antes de enviar sua conta.</h2>
+      <ol class="passos">
+        <li class="passo">
+          <img class="passo-img" src="/Clareia/img/passo-envie.svg" alt="" width="72" height="72">
+          <h3 class="passo-titulo"><span class="passo-numero">/ 01</span>Envie</h3>
+          <p class="passo-texto" id="passo-01">Envie sua fatura de energia em PDF, JPG ou PNG. Recebe energia de outra pessoa ou empresa, com desconto? Envie também a conta da distribuidora (opcional) para comparar as duas. Antes de enviar, oculte CPF, endereço e código do cliente.</p>
+        </li>
+        <li class="passo">
+          <img class="passo-img" src="/Clareia/img/passo-leitura.svg" alt="" width="72" height="72">
+          <h3 class="passo-titulo"><span class="passo-numero">/ 02</span>Leitura</h3>
+          <p class="passo-texto" id="passo-02">A IA lê a conta e separa o que importa: consumo, tarifas, impostos, bandeira tarifária e descontos.</p>
+        </li>
+        <li class="passo">
+          <img class="passo-img" src="/Clareia/img/passo-relatorio.svg" alt="" width="72" height="72">
+          <h3 class="passo-titulo"><span class="passo-numero">/ 03</span>Relatório</h3>
+          <p class="passo-texto" id="passo-03">Os dados viram uma análise organizada, com cada item explicado em linguagem simples. Se você enviou as duas contas, ela compara os valores.</p>
+        </li>
+        <li class="passo">
+          <img class="passo-img" src="/Clareia/img/passo-clareza.svg" alt="" width="72" height="72">
+          <h3 class="passo-titulo"><span class="passo-numero">/ 04</span>Clareza</h3>
+          <p class="passo-texto" id="passo-04">Veja o resultado na tela, na hora.<!-- remover o span abaixo até existirem login e histórico --> <span class="so-com-login">Com login, você pode guardar o histórico e acompanhar seu consumo. Sem login, nada fica salvo.</span></p>
+        </li>
+      </ol>
+
+      <div class="carrossel" hidden>
+        <ol class="trilho" aria-hidden="true">
+          <li><span></span></li><li><span></span></li><li><span></span></li><li><span></span></li>
+        </ol>
+        <div class="carrossel-botoes">
+          <button type="button" class="ctrl-ant" aria-label="Passo anterior"><span aria-hidden="true"></span></button>
+          <button type="button" class="ctrl-play" aria-label="Pausar a troca automática" aria-pressed="false"><span aria-hidden="true"></span></button>
+          <button type="button" class="ctrl-prox" aria-label="Próximo passo"><span aria-hidden="true"></span></button>
+        </div>
+      </div>
+
+      <ul class="chips">
+        <li><img src="/Clareia/img/doc.svg" alt="" width="20" height="20">PDF, JPG ou PNG • até 10 MB</li>
+        <li><img src="/Clareia/img/safety.svg" alt="" width="20" height="20">Oculte CPF, endereço e código do cliente</li>
+        <li><img src="/Clareia/img/lamp.svg" alt="" width="20" height="20">Cada item explicado em linguagem simples</li>
+      </ul>
+    </section>
     <script src="/Clareia/js/drop-file.js" defer></script>
+    <script src="/Clareia/js/como-funciona.js" defer></script>
   </body>
 </html>

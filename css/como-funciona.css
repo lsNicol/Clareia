@@ -1,0 +1,312 @@
+html {
+  scroll-behavior: smooth;
+}
+
+/* ocupa ~90% da tela; o scroll-margin deixa uma faixa do main aparecendo em cima
+   e do próximo bloco embaixo */
+.como-funciona {
+  --tempo: 6s;
+  scroll-margin-top: 5dvh;
+  min-height: 90dvh;
+  display: flex;
+  flex-flow: column;
+  padding: 3.5rem var(--gutter) 3rem;
+}
+.como-funciona .eyebrow {
+  margin-bottom: 1rem;
+}
+.como-funciona h2 {
+  font-family: 'Manrope', 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: clamp(2.2rem, 3.4vw, 3.6rem);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  max-width: 42rem;
+}
+
+.passos {
+  list-style: none;
+  flex: 1;
+  display: flex;
+  gap: 1.2rem;
+  margin-top: 2.5rem;
+  min-height: 26rem;
+}
+
+.passo {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-flow: column;
+  gap: 1rem;
+  padding: 2rem;
+  background-color: white;
+  border: 1px solid #dfe5d9;
+  border-radius: 2.2rem;
+  box-shadow: 0 4px 10px rgba(23, 62, 48, 0.08);
+}
+.passo-img {
+  width: 4.8rem;
+  height: 4.8rem;
+  flex: none;
+}
+.passo-titulo {
+  font-family: 'Manrope', 'Inter', sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.15;
+}
+.passo-numero {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--cinza);
+}
+.passo-texto {
+  margin-top: auto;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--cinza);
+}
+.passo-texto[hidden] {
+  display: none;
+}
+
+/* só com JS os passos viram carrossel; sem JS os quatro textos ficam visíveis */
+.com-js .passo {
+  transition: flex-grow 0.6s ease, background-color 0.4s ease;
+}
+.com-js .passo.aberto {
+  flex-grow: 2.3;
+  background-color: var(--verde);
+  border-color: var(--verde);
+}
+.com-js .passo.aberto .passo-numero,
+.com-js .passo.aberto .passo-texto {
+  color: var(--verde-claro);
+}
+.com-js .passo.aberto .passo-titulo {
+  color: white;
+}
+
+.passo-botao {
+  all: unset;
+  cursor: pointer;
+}
+/* o botão cobre o card inteiro, então qualquer ponto do card troca o passo */
+.passo-botao::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 2.2rem;
+}
+.passo-botao:focus-visible {
+  outline: none;
+}
+.passo-botao:focus-visible::after {
+  outline: 3px solid var(--verde);
+  outline-offset: 3px;
+}
+.com-js .passo.aberto .passo-botao:focus-visible::after {
+  outline-color: var(--amarelo);
+  outline-offset: -8px;
+}
+
+/* animação de entrada: só com JS, uma vez por passo */
+.com-js .passo {
+  opacity: 0;
+  transform: translateY(1.5rem);
+}
+.com-js .passo.visivel {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.6s ease, transform 0.6s ease,
+              flex-grow 0.6s ease, background-color 0.4s ease;
+  transition-delay: calc(var(--i, 0) * 0.1s), calc(var(--i, 0) * 0.1s), 0s, 0s;
+}
+.com-js .passo.visivel.aberto .passo-texto {
+  animation: surgir 0.6s ease both;
+}
+@keyframes surgir {
+  from { opacity: 0; transform: translateY(0.6rem); }
+}
+
+/* trilho de progresso + controles */
+.carrossel {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+.carrossel[hidden] {
+  display: none;
+}
+.trilho {
+  list-style: none;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.6rem;
+}
+.trilho li {
+  height: 0.35rem;
+  background: #d5dccf;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+.trilho span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--verde);
+}
+.trilho .feito span {
+  width: 100%;
+}
+.trilho .ativo span {
+  width: 100%;
+  transform-origin: left;
+  animation: encher var(--tempo) linear both paused;
+}
+.na-tela:not(.pausado) .trilho .ativo span {
+  animation-play-state: running;
+}
+.na-tela:not(.pausado):hover .trilho .ativo span,
+.na-tela:not(.pausado):focus-within .trilho .ativo span {
+  animation-play-state: paused;
+}
+@keyframes encher {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.carrossel-botoes {
+  display: flex;
+  gap: 0.7rem;
+}
+.carrossel-botoes button {
+  all: unset;
+  box-sizing: border-box;
+  position: relative;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: 1.5px solid var(--verde);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.carrossel-botoes button:hover {
+  background-color: var(--verde-claro);
+}
+.carrossel-botoes button:focus-visible {
+  outline: 3px solid var(--verde);
+  outline-offset: 3px;
+}
+.carrossel-botoes button span {
+  position: absolute;
+  inset: 0;
+}
+.ctrl-ant span::before,
+.ctrl-prox span::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.7rem;
+  height: 0.7rem;
+  border: solid var(--verde);
+  border-width: 2px 2px 0 0;
+}
+.ctrl-prox span::before {
+  transform: translate(-70%, -50%) rotate(45deg);
+}
+.ctrl-ant span::before {
+  transform: translate(-30%, -50%) rotate(-135deg);
+}
+/* pausar: duas barras; tocar: triângulo */
+.ctrl-play span::before,
+.ctrl-play span::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 3px;
+  height: 1rem;
+  background: var(--verde);
+  border-radius: 2px;
+  transform: translateY(-50%);
+}
+.ctrl-play span::before { left: calc(50% - 5px); }
+.ctrl-play span::after { left: calc(50% + 2px); }
+.ctrl-play[aria-pressed="true"] span::after {
+  display: none;
+}
+.ctrl-play[aria-pressed="true"] span::before {
+  left: calc(50% - 3px);
+  width: 0;
+  height: 0;
+  background: none;
+  border-radius: 0;
+  border-style: solid;
+  border-color: transparent transparent transparent var(--verde);
+  border-width: 0.5rem 0 0.5rem 0.85rem;
+}
+
+.chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 1.6rem;
+}
+.chips li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1.1rem;
+  background: var(--verde-claro);
+  border-radius: 100px;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .com-js .passo,
+  .com-js .passo.visivel {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .com-js .passo.visivel.aberto .passo-texto {
+    animation: none;
+  }
+  .trilho .ativo span {
+    animation: none;
+  }
+}
+
+/* uma coluna em telas estreitas (ou com muito zoom) */
+@media (max-width: 1000px) {
+  .como-funciona {
+    min-height: 0;
+  }
+  .passos {
+    flex-direction: column;
+    min-height: 0;
+  }
+  .passo {
+    flex: none;
+  }
+  .passo-texto {
+    margin-top: 0;
+  }
+  .carrossel {
+    gap: 1rem;
+  }
+}
