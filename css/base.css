@@ -21,7 +21,9 @@ html {
   padding: 0;
   box-sizing: border-box;
 }
-
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari e Edge */
+}
 body {
   min-height: 100dvh;
   display: flex;
