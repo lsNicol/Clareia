@@ -9,12 +9,12 @@
     <meta property="og:title" content="ClareIA">
     <meta property="og:description" content="ClareIA: envie sua conta e entenda seu consumo.">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://lsnicol.github.io/Clareia/img/logo-clareia.svg">
-    <link rel="icon" href="/Clareia/img/logo-clareia.svg" type="image/svg+xml">
+    <meta property="og:image" content="https://lsnicol.github.io/Clareia/img/logo-simbolo.svg">
+    <link rel="icon" href="/Clareia/img/logo-simbolo.svg" type="image/svg+xml">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@400;500;600;800&display=swap" rel="stylesheet">
 
     <link href="/Clareia/css/base.css" rel="stylesheet">
     <link href="/Clareia/css/header.css" rel="stylesheet">
@@ -22,15 +22,19 @@
   </head>
   <body>
     <header>
-      <a class="clareia-logo" href="/Clareia/">
-        <img src="/Clareia/img/logo-clareia.svg" alt="ClareIA, página inicial">
+      <a class="clareia-logo" href="/Clareia/" aria-label="ClareIA, página inicial">
+        <img src="/Clareia/img/logo-simbolo.svg" alt="" height="40">
+        <span class="logo-texto">ClareIA</span>
       </a>
       <nav aria-label="Principal">
-        <a href="#">Como funciona</a>
-        <a href="#">Dúvidas frequentes</a>
-        <a class="btn-conta" href="#">
+        <a href="#" class="login hide">Login</a>
+        <a href="#" class="sing-up hide">Sing-up</a>
+        <a class="btn-conta hide" href="#">
           Enviar minha conta
           <img src="/Clareia/img/seta.svg" alt="" width="10" height="10">
+        </a>
+        <a class="menu" href="#">
+          <img src="/Clareia/img/menu-hamburguer.svg" width="40">
         </a>
       </nav>
     </header>
