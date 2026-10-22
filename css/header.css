@@ -239,3 +239,29 @@ header nav .menu-item:hover .menu-icone {
     border-top: 1px solid var(--verde-claro);
   }
 }
+
+/* celular */
+@media (max-width: 600px){
+  header {
+    padding: 0.8rem var(--gutter);
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+  .clareia-logo img {
+    height: 2.6rem;
+  }
+  .logo-texto {
+    font-size: 1.8rem;
+  }
+  .menu-botao img {
+    width: 2.6rem;
+  }
+  header nav .menu {
+    width: min(26rem, calc(100vw - 2 * var(--gutter)));
+  }
+  .menu-painel {
+    gap: 1.2rem;
+    max-height: calc(100dvh - 6rem);
+    overflow-y: auto;
+  }
+}
