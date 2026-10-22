@@ -293,3 +293,76 @@ aside > *{
     width: 80%;
   }
 }
+
+/* celular */
+@media (max-width: 600px){
+  main {
+    padding: 0.5rem var(--gutter) 1.5rem;
+    row-gap: 2rem;
+  }
+  .main-container {
+    width: 100%;
+    gap: 1.1rem;
+  }
+  .eyebrow {
+    font-size: 0.75rem;
+  }
+  .main-container h1 {
+    font-size: clamp(2.3rem, 10.5vw, 3rem);
+  }
+  .main-container p {
+    font-size: 1.1rem;
+  }
+  .area-de-envio {
+    padding: 1rem;
+    border-radius: 1.5rem;
+  }
+  .drag-file {
+    padding: 1rem;
+    gap: 0.9rem;
+  }
+  .drag-file > img {
+    width: 2.8rem;
+    height: 2.8rem;
+  }
+  .drag-file .titulo {
+    font-size: 1.05rem;
+  }
+  .btn-envio {
+    height: 3.8rem;
+  }
+  .btn-envio span {
+    font-size: 1.1rem;
+  }
+  aside {
+    border-radius: 2rem;
+    padding: 1.6rem 1.1rem 1.3rem;
+  }
+  aside::before {
+    width: 18rem;
+    height: 18rem;
+    top: -6.5rem;
+    right: -5.5rem;
+  }
+  .card {
+    padding: 1.3rem 1.1rem;
+    border-radius: 1.5rem;
+  }
+  .card-topo {
+    flex-wrap: wrap;
+  }
+  .card-topo h2 {
+    font-size: 1.5rem;
+  }
+  .card .bloco {
+    padding: 0.9rem 1rem;
+  }
+  .card .valor {
+    font-size: 1.4rem;
+  }
+}
+@media (max-width: 400px){
+  .card .blocos {
+    grid-template-columns: 1fr;
+  }
+}
