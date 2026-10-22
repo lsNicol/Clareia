@@ -28,14 +28,15 @@ img/              ícones e logo em SVG
 
 ## Rodando localmente
 
-Os caminhos dos arquivos começam com `/Clareia/`, por causa do GitHub Pages. Por isso o site precisa ser servido a partir da pasta **pai** do projeto:
+Os caminhos são relativos, então basta servir a pasta do projeto:
 
 ```bash
-cd ..                       # pasta que contém Clareia/
 python3 -m http.server 8000
 ```
 
-Depois abra http://localhost:8000/Clareia/.
+Depois abra http://localhost:8000/.
+
+Nas páginas dentro de subpastas (ex.: `pages/`), use `../` nos caminhos: `../css/base.css`, `../img/logo-simbolo.svg`.
 
 ## Deploy
 
