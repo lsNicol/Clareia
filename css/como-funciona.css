@@ -175,9 +175,11 @@ html {
 .na-tela:not(.pausado) .trilho .ativo span {
   animation-play-state: running;
 }
-.na-tela:not(.pausado):hover .trilho .ativo span,
-.na-tela:not(.pausado):focus-within .trilho .ativo span {
-  animation-play-state: paused;
+/* pausa só com o mouse em cima do card aberto (no toque o hover fica "grudado") */
+@media (hover: hover) and (pointer: fine) {
+  .na-tela:not(.pausado):has(.passo.aberto:hover) .trilho .ativo span {
+    animation-play-state: paused;
+  }
 }
 @keyframes encher {
   from { transform: scaleX(0); }
