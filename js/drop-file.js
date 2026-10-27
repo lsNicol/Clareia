@@ -20,8 +20,13 @@ zona.addEventListener("drop", (e) => {
   e.preventDefault(); // impede o navegador de abrir o arquivo
   zona.classList.remove("arrastando");
 
-  const arquivo = e.dataTransfer.files[0];
-  if (arquivo) tratarArquivo(arquivo);
+  const arquivos = e.dataTransfer.files;
+  for (const file of arquivos){
+    if (!tratarArquivo(file)) {
+      console.log("Iterrompendo..");
+      break;
+    }
+  }
 });
 
 // Também funciona clicando e escolhendo pelo explorador de arquivos
@@ -31,4 +36,29 @@ input.addEventListener("change", () => {
 
 function tratarArquivo(arquivo) {
   console.log(arquivo.name, arquivo.type, arquivo.size);
+  if (arquivo.size > 10240000){
+    console.log("Arquivo rejeitado, maior que 10 Mb");
+    return false;
+  }
+  else{
+    console.log("Arquivo aceitado!");
+    enviarParaServidor(arquivo);
+    return true;
+  }
+}
+async function enviarParaServidor(arquivo) {
+  const form = new FormData();
+  form.append("arquivo", arquivo);
+
+  try {
+    const resp = await fetch("/api/fatura", { method: "POST", body: form });
+    const dados = await resp.json();
+    if (!resp.ok) {
+      console.log("Erro:", dados.erro);
+      return;
+    }
+    console.log("Dados da fatura:", dados);
+  } catch (err) {
+    console.log("Servidor fora do ar?", err);
+  }
 }
