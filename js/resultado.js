@@ -230,17 +230,33 @@
     el.textContent = texto;
     mensagens.append(el);
     mensagens.scrollTop = mensagens.scrollHeight;
+    return el;
   }
   const form = document.getElementById("form-chat");
   const campo = document.getElementById("pergunta");
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const texto = campo.value.trim();
     if (!texto) return;
     campo.value = "";
     mensagem(texto, "eu");
-    // TODO: ligar ao backend de IA quando existir
-    mensagem("O chat com IA ainda está em construção. Por enquanto, os dados extraídos aparecem no painel lateral.", "ia");
+    if (!fatura) {
+      mensagem("Envie uma fatura na página inicial para eu poder ajudar.", "ia");
+      return;
+    }
+    const resposta = mensagem("Pensando...", "ia");
+    try {
+      const resp = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pergunta: texto, fatura }),
+      });
+      const dados = await resp.json();
+      resposta.textContent = resp.ok ? dados.resposta : dados.erro;
+    } catch {
+      resposta.textContent = "Não consegui falar com o assistente agora. Tente de novo em instantes.";
+    }
+    mensagens.scrollTop = mensagens.scrollHeight;
   });
   campo.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
