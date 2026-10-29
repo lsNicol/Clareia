@@ -244,7 +244,12 @@
       mensagem("Envie uma fatura na página inicial para eu poder ajudar.", "ia");
       return;
     }
-    const resposta = mensagem("Pensando...", "ia");
+    const resposta = mensagem("Pensando", "ia");
+    resposta.classList.add("pensando");
+    const pontos = document.createElement("span");
+    pontos.className = "pontos";
+    pontos.append(...[0, 1, 2].map(() => document.createElement("i")));
+    resposta.append(pontos);
     try {
       const resp = await fetch("/api/chat", {
         method: "POST",
@@ -256,6 +261,7 @@
     } catch {
       resposta.textContent = "Não consegui falar com o assistente agora. Tente de novo em instantes.";
     }
+    resposta.classList.remove("pensando");
     mensagens.scrollTop = mensagens.scrollHeight;
   });
   campo.addEventListener("keydown", (e) => {
