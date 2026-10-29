@@ -10,7 +10,7 @@ app = Flask(__name__, static_folder=None)
 def index():
     return send_from_directory(RAIZ, "index.html")
 
-@app.get("/<any(css, js, img):pasta>/<path:arquivo>")
+@app.get("/<any(css, js, img, pages):pasta>/<path:arquivo>")
 def estaticos(pasta, arquivo):
     return send_from_directory(os.path.join(RAIZ, pasta), arquivo)
 
@@ -33,4 +33,4 @@ def receber_fatura():
     return jsonify(dados)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
