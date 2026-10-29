@@ -58,6 +58,8 @@ async function enviarParaServidor(arquivo) {
       return;
     }
     console.log("Dados da fatura:", dados);
+    await faturaStore.salvar(arquivo, dados);
+    location.href = "/pages/resultado.html";
   } catch (err) {
     console.log("Servidor fora do ar?", err);
   }
