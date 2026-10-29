@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ClareIA | resultado</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@400;500;600;800&display=swap" rel="stylesheet">
+
+    <link href="/css/base.css" rel="stylesheet">
+    <link href="/css/header.css" rel="stylesheet">
+    <link href="/css/resultado.css" rel="stylesheet">
+  </head>
+  <body>
+    <header class="header-app">
+      <div class="header-esq">
+        <a class="clareia-logo" href="/" aria-label="ClareIA, página inicial">
+          <img src="/img/logo-simbolo.svg" alt="" height="40">
+          <span class="logo-texto">ClareIA</span>
+        </a>
+        <button class="barra-botao" id="alternar-sidebar" type="button" aria-label="Ocultar barra lateral" aria-expanded="true" aria-controls="sidebar">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16"/></svg>
+        </button>
+        <a class="barra-novo" href="/">+ Nova fatura</a>
+      </div>
+      <button type="button" class="barra-arquivo" id="nome-arquivo" aria-haspopup="menu" disabled>
+        <svg class="arq-chat" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a8 8 0 00-6.9 12L4 20l4.2-1.1A8 8 0 1012 4z"/></svg>
+        <span class="arq-nome">Sua fatura</span>
+        <svg class="arq-mais" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>
+      </button>
+      <nav aria-label="Principal">
+        <div class="modos" role="group" aria-label="Modo de exibição">
+          <button type="button" class="barra-botao" data-modo="pdf" aria-label="Só o PDF" title="Só o PDF">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg>
+          </button>
+          <button type="button" class="barra-botao" data-modo="ambos" aria-label="PDF e chat" title="PDF e chat">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M12 4v16"/></svg>
+          </button>
+          <button type="button" class="barra-botao" data-modo="chat" aria-label="Só o chat" title="Só o chat">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>
+          </button>
+        </div>
+        <a href="#" class="sing-up hide">Sing-up</a>
+        <div class="menu-wrap">
+          <button class="menu-botao" type="button" aria-label="Abrir menu" aria-haspopup="true">
+            <img src="/img/menu-hamburguer.svg" width="40" alt="">
+          </button>
+
+          <div class="menu">
+            <div class="menu-painel">
+              <div class="menu-destaques">
+                <p class="menu-titulo">Explore</p>
+                <a class="menu-item" href="#como-funciona">
+                  <span class="menu-icone"><img src="/img/passo-envie.svg" alt="" width="28" height="28"></span>
+                  <span>
+                    <strong>Como funciona</strong>
+                    <small>Veja cada passo antes de enviar</small>
+                  </span>
+                </a>
+                <a class="menu-item" href="#">
+                  <span class="menu-icone"><img src="/img/passo-leitura.svg" alt="" width="28" height="28"></span>
+                  <span>
+                    <strong>Leitura da conta</strong>
+                    <small>Consumo, tarifas e impostos</small>
+                  </span>
+                </a>
+                <a class="menu-item" href="#">
+                  <span class="menu-icone"><img src="/img/passo-clareza.svg" alt="" width="28" height="28"></span>
+                  <span>
+                    <strong>Análise clara</strong>
+                    <small>Cada item em linguagem simples</small>
+                  </span>
+                </a>
+              </div>
+              <div class="menu-lateral">
+                <ul>
+                  <li><a href="#">Início</a></li>
+                  <li><a href="#">Sobre</a></li>
+                  <li><a href="#">Serviços</a></li>
+                  <li><a href="#">Contato</a></li>
+                </ul>
+                <ul class="menu-conta">
+                  <li><a href="#">Login</a></li>
+                  <li><a href="#">Sing-up</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main class="app">
+      <div class="espaco">
+        <aside class="sidebar" id="sidebar" aria-label="Painel lateral">
+          <div class="sidebar-rolagem">
+            <section>
+              <h2 data-tip="Chats" data-tip-pos="right"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg><span class="rot">Chats</span></h2>
+              <ul class="lista-faturas" id="lista-faturas"></ul>
+            </section>
+            <section>
+              <h2 data-tip="Pastas" data-tip-pos="right"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7a2 2 0 012-2h4l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H6a2 2 0 01-2-2z"/></svg><span class="rot">Pastas</span></h2>
+              <ul class="lista-pastas" id="lista-pastas"></ul>
+              <form class="nova-pasta" id="nova-pasta">
+                <button type="button" id="nova-pasta-botao">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Nova pasta</button>
+                <input type="text" id="nova-pasta-nome" maxlength="40" placeholder="Nome da pasta" aria-label="Nome da nova pasta" hidden>
+              </form>
+            </section>
+            <section>
+              <h2 data-tip="Ferramentas" data-tip-pos="right"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6.5l3 3M4 20l1-4L16.5 4.5a2.1 2.1 0 013 3L8 19z"/></svg><span class="rot">Ferramentas</span></h2>
+              <ul class="ferr-lista">
+                <li><button type="button" data-acao="resumir">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h14M5 12h14M5 18h9"/></svg>Resumir fatura</button></li>
+                <li><button type="button" data-acao="itens">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg>Explicar itens</button></li>
+                <li><button type="button" data-acao="consumo">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>Consumo mensal</button></li>
+              </ul>
+            </section>
+          </div>
+          <div class="sidebar-rodape">
+            <p>Crie uma conta grátis para salvar seu histórico de faturas</p>
+            <div class="ilustracao" aria-hidden="true">
+              <div class="cartao"><span class="cartao-icone"></span><span class="cartao-linhas"><i></i><i></i></span></div>
+              <div class="cartao"><span class="cartao-icone"></span><span class="cartao-linhas"><i></i><i></i></span></div>
+            </div>
+            <a class="btn-sidebar" href="#">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.5 18.5c1.2-2.2 3.2-3.2 5.5-3.2s4.3 1 5.5 3.2"/></svg>
+              Sing-up
+            </a>
+          </div>
+        </aside>
+        <div class="divisor divisor-sidebar" id="divisor-sidebar" role="separator" aria-orientation="vertical"
+             aria-label="Ajustar largura do painel lateral" aria-valuemin="200" aria-valuemax="480" aria-valuenow="272" tabindex="0"></div>
+        <div class="fundo-sidebar" id="fundo-sidebar" hidden></div>
+        <div class="menu-chat" id="menu-chat" role="menu" hidden>
+          <button type="button" role="menuitem" data-acao="renomear">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6.5l3 3M4 20l1-4L16.5 4.5a2.1 2.1 0 013 3L8 19z"/></svg>Renomear chat</button>
+          <div class="menu-sub-grupo">
+            <button type="button" role="menuitem" aria-haspopup="menu" aria-expanded="false" data-acao="pasta">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7a2 2 0 012-2h4l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H6a2 2 0 01-2-2z"/></svg>Mover para pasta
+              <svg class="seta" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+            <div class="menu-chat menu-sub" id="menu-pastas" role="menu" hidden></div>
+          </div>
+          <hr>
+          <button type="button" role="menuitem" data-acao="compartilhar">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4m0 0L8 8m4-4l4 4M5 13v6h14v-6"/></svg>Compartilhar chat</button>
+          <button type="button" role="menuitem" data-acao="baixar">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg>Exportar chat</button>
+          <hr>
+          <button type="button" role="menuitem" data-acao="limpar">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 10-2.3 5.7M20 5v6h-6"/></svg>Redefinir chat</button>
+          <button type="button" role="menuitem" data-acao="excluir">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>Excluir chat</button>
+        </div>
+
+        <div class="split" id="split" data-modo="ambos">
+          <section class="painel painel-pdf" aria-label="Fatura em PDF">
+            <div class="visor" id="visor" tabindex="0" aria-label="Páginas da fatura" hidden></div>
+            <div class="ferramentas" id="ferramentas" role="toolbar" aria-label="Ferramentas do PDF" hidden>
+              <button type="button" class="ferr-botao" id="zoom-menos" aria-label="Diminuir zoom" title="Diminuir zoom">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg>
+              </button>
+              <button type="button" class="ferr-botao" id="zoom-ajustar" aria-label="Ajustar à largura" title="Ajustar à largura">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14l-6 6m0 0h5m-5 0v-5M14 10l6-6m0 0h-5m5 0v5"/></svg>
+              </button>
+              <button type="button" class="ferr-botao" id="zoom-mais" aria-label="Aumentar zoom" title="Aumentar zoom">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg>
+              </button>
+              <span class="ferr-sep" aria-hidden="true"></span>
+              <label class="sr-only" for="pagina-atual">Página</label>
+              <input class="ferr-pagina" id="pagina-atual" type="number" min="1" value="1">
+              <span class="ferr-total">de <span id="total-paginas">1</span></span>
+              <span class="ferr-sep" aria-hidden="true"></span>
+              <button type="button" class="ferr-botao" id="baixar" aria-label="Baixar PDF" title="Baixar PDF">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg>
+              </button>
+              <button type="button" class="ferr-botao" id="abrir-busca" aria-label="Buscar no PDF" title="Buscar no PDF" aria-expanded="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg>
+              </button>
+            </div>
+            <form class="busca" id="busca" role="search" hidden>
+              <label class="sr-only" for="termo">Buscar no PDF</label>
+              <input id="termo" type="search" placeholder="Buscar no PDF" autocomplete="off">
+              <span class="busca-conta" id="busca-conta" aria-live="polite"></span>
+              <button type="button" class="ferr-botao" id="busca-ant" aria-label="Resultado anterior">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>
+              </button>
+              <button type="button" class="ferr-botao" id="busca-prox" aria-label="Próximo resultado">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+            </form>
+            <p class="vazio" id="pdf-vazio">Nenhuma fatura por aqui. <a href="/">Envie uma conta</a> para começar.</p>
+          </section>
+
+          <div class="divisor" id="divisor" role="separator" aria-orientation="vertical"
+               aria-label="Ajustar largura do PDF e do chat" aria-valuemin="20" aria-valuemax="80" aria-valuenow="55" tabindex="0"></div>
+
+          <section class="painel painel-chat ClareIA" aria-label="Chat">
+            <div class="mensagens" id="mensagens" aria-live="polite"></div>
+            <form class="entrada" id="form-chat">
+              <label class="sr-only" for="pergunta">Pergunte sobre a fatura</label>
+              <textarea id="pergunta" rows="2" placeholder="Pergunte qualquer coisa sobre a fatura…"></textarea>
+              <button type="submit" class="enviar" aria-label="Enviar">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+              </button>
+            </form>
+          </section>
+        </div>
+      </div>
+    </main>
+    <dialog class="modal" id="modal-renomear" aria-labelledby="modal-renomear-titulo">
+      <form method="dialog" id="form-renomear">
+        <h2 id="modal-renomear-titulo">Renomear chat</h2>
+        <input type="text" id="campo-renomear" maxlength="80" aria-label="Novo nome do chat" autocomplete="off">
+        <div class="modal-acoes">
+          <button type="button" class="modal-cancelar" value="cancel">Cancelar</button>
+          <button type="submit" class="modal-salvar">Salvar</button>
+        </div>
+      </form>
+    </dialog>
+    <script src="/js/vendor/pdf.min.js"></script>
+    <script src="/js/fatura-store.js"></script>
+    <script src="/js/leitor-pdf.js"></script>
+    <script src="/js/resultado.js"></script>
+  </body>
+</html>
