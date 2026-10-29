@@ -257,7 +257,12 @@
         body: JSON.stringify({ pergunta: texto, fatura }),
       });
       const dados = await resp.json();
-      resposta.textContent = resp.ok ? dados.resposta : dados.erro;
+      if (resp.ok) {
+        resposta.classList.add("md");
+        renderMarkdown(dados.resposta, resposta);
+      } else {
+        resposta.textContent = dados.erro;
+      }
     } catch {
       resposta.textContent = "Não consegui falar com o assistente agora. Tente de novo em instantes.";
     }
@@ -300,7 +305,7 @@
 
   function baixarConversa() {
     const linhas = [...mensagens.children].map((m) =>
-      `${m.classList.contains("eu") ? "Você" : "ClareIA"}: ${m.textContent}`);
+      `${m.classList.contains("eu") ? "Você" : "ClareIA"}: ${m.innerText}`);
     const url = URL.createObjectURL(new Blob([linhas.join("\n\n")], { type: "text/plain" }));
     const a = Object.assign(document.createElement("a"), { href: url, download: "conversa-clareia.txt" });
     a.click();
@@ -544,7 +549,7 @@
 
   async function compartilhar() {
     const texto = [...mensagens.children].map((m) =>
-      `${m.classList.contains("eu") ? "Você" : "ClareIA"}: ${m.textContent}`).join("\n\n");
+      `${m.classList.contains("eu") ? "Você" : "ClareIA"}: ${m.innerText}`).join("\n\n");
     try {
       if (navigator.share) { await navigator.share({ title: chat.nome, text: texto }); return; }
       await navigator.clipboard.writeText(texto);

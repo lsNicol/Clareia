@@ -718,6 +718,32 @@ body {
   .pontos i { animation: none; opacity: 0.6; }
 }
 
+/* resposta da IA em markdown */
+.msg.md { white-space: normal; }
+.msg.md > :first-child { margin-top: 0; }
+.msg.md > :last-child { margin-bottom: 0; }
+.msg.md p, .msg.md ul, .msg.md ol, .msg.md pre, .msg.md .tabela { margin: 0.5rem 0; }
+.msg.md ul, .msg.md ol { padding-left: 1.3rem; }
+.msg.md li + li { margin-top: 0.2rem; }
+.msg.md h3, .msg.md h4 { margin: 0.8rem 0 0.3rem; font-size: 1rem; }
+.msg.md hr { margin: 0.7rem 0; border: 0; border-top: 1px solid #c9d4bf; }
+.msg.md code {
+  padding: 0.1em 0.35em;
+  border-radius: 0.3rem;
+  background: rgba(23, 62, 48, 0.08);
+  font-size: 0.9em;
+}
+.msg.md pre {
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.6rem;
+  background: rgba(23, 62, 48, 0.08);
+  overflow-x: auto;
+}
+.msg.md pre code { padding: 0; background: none; }
+.msg.md .tabela { overflow-x: auto; }
+.msg.md table { border-collapse: collapse; font-size: 0.92em; }
+.msg.md th, .msg.md td { padding: 0.3rem 0.6rem; border: 1px solid #c9d4bf; text-align: left; }
+.msg.md th { background: rgba(23, 62, 48, 0.08); }
 .entrada {
   position: relative;
   margin: 0.8rem;
