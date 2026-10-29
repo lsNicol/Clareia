@@ -3,3 +3,7 @@ __pycache__/
 
 # faturas reais (CPF, endereço, UC)
 data/
+
+# segredos e faturas
+.env
+*.pdf
