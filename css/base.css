@@ -7,6 +7,7 @@
   --texto: #173E30;
   --cinza: #637168;
   --gutter: 5.6vw;
+  --gutter-2: clamp(1rem, 2vw, 2rem); /* laterais menores, para telas de app (resultado) */
 }
 
 /* tamanho fixo (15px com a fonte padrão do navegador), assim o zoom (Ctrl +/-) funciona */
