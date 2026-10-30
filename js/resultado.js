@@ -1,3 +1,7 @@
+import { esconderDica } from "./dicas.js";
+import { aplicarSidebar, definirLargura } from "./sidebar.js";
+import { iniciarChat } from "./chat.js";
+
 (() => {
   const split = document.getElementById("split");
   const divisor = document.getElementById("divisor");
@@ -26,167 +30,6 @@
     aplicarModo();
   }));
   estreita.addEventListener("change", () => { aplicarModo(); aplicarSidebar(!estreita.matches); });
-
-  // ---- dicas (balão com setinha) em todo botão só de ícone
-  const dica = document.createElement("div");
-  dica.className = "dica";
-  dica.setAttribute("role", "tooltip");
-  dica.hidden = true;
-  document.body.append(dica);
-  const OPOSTO = { top: "bottom", bottom: "top", left: "right", right: "left" };
-  let alvoDica = null;
-
-  function esconderDica() { dica.hidden = true; alvoDica = null; }
-  function mostrarDica(el) {
-    const texto = el.dataset.tip;
-    if (!texto || alvoDica === el) return;
-    alvoDica = el;
-    dica.textContent = texto;
-    dica.hidden = false;
-    const r = el.getBoundingClientRect();
-    const d = dica.getBoundingClientRect();
-    const FOLGA = 10, M = 6;
-    let pos = el.dataset.tipPos || "bottom";
-    const cabe = {
-      top: r.top - d.height - FOLGA >= M,
-      bottom: r.bottom + d.height + FOLGA <= innerHeight - M,
-      left: r.left - d.width - FOLGA >= M,
-      right: r.right + d.width + FOLGA <= innerWidth - M,
-    };
-    if (!cabe[pos] && cabe[OPOSTO[pos]]) pos = OPOSTO[pos];
-    let x, y;
-    if (pos === "top" || pos === "bottom") {
-      x = Math.min(innerWidth - d.width - M, Math.max(M, r.left + r.width / 2 - d.width / 2));
-      y = pos === "top" ? r.top - d.height - FOLGA : r.bottom + FOLGA;
-      dica.style.setProperty("--seta", `${r.left + r.width / 2 - x}px`);
-    } else {
-      y = Math.min(innerHeight - d.height - M, Math.max(M, r.top + r.height / 2 - d.height / 2));
-      x = pos === "left" ? r.left - d.width - FOLGA : r.right + FOLGA;
-      dica.style.setProperty("--seta", `${r.top + r.height / 2 - y}px`);
-    }
-    dica.dataset.pos = pos;
-    dica.style.left = `${x}px`;
-    dica.style.top = `${y}px`;
-  }
-  // o texto vem de data-tip, ou de title/aria-label dos botões (title nativo atrapalharia)
-  function alvoComDica(e) {
-    const el = e.target.closest?.("[data-tip], button[title], button[aria-label]");
-    if (!el || el.closest(".menu-chat")) return null;
-    if (!el.dataset.tip) {
-      const t = el.getAttribute("title") || el.getAttribute("aria-label");
-      if (!t) return null;
-      el.dataset.tip = t;
-      el.removeAttribute("title");
-    }
-    return el;
-  }
-  document.addEventListener("pointerover", (e) => {
-    if (e.pointerType === "touch") return;
-    const el = alvoComDica(e);
-    if (el) mostrarDica(el); else esconderDica();
-  });
-  document.addEventListener("focusin", (e) => {
-    const el = alvoComDica(e);
-    if (el && el.matches(":focus-visible")) mostrarDica(el); else esconderDica();
-  });
-  document.addEventListener("pointerdown", esconderDica);
-  document.addEventListener("focusout", esconderDica);
-  document.addEventListener("scroll", esconderDica, true);
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape") esconderDica(); });
-
-  // ---- sidebar
-  function aplicarSidebar(aberta, animar = true) {
-    if (animar && aberta && sidebar.classList.contains("fechada")) {
-      sidebar.classList.add("abrindo");
-      setTimeout(() => sidebar.classList.remove("abrindo"), 300);
-    }
-    sidebar.classList.toggle("fechada", !aberta);
-    fundo.hidden = !(aberta && estreita.matches);
-    botaoSidebar.setAttribute("aria-expanded", aberta);
-    botaoSidebar.setAttribute("aria-label", aberta ? "Ocultar barra lateral" : "Mostrar barra lateral");
-    delete botaoSidebar.dataset.tip; // o texto da dica muda com o estado
-    // fechada vira uma faixa de ícones; clicar num deles reabre
-    sidebar.querySelectorAll("h2").forEach((h) => {
-      if (aberta) { h.removeAttribute("tabindex"); h.removeAttribute("role"); }
-      else { h.tabIndex = 0; h.setAttribute("role", "button"); }
-    });
-    esconderDica();
-  }
-  sidebar.querySelectorAll("h2").forEach((h) => {
-    const abrir = () => { if (sidebar.classList.contains("fechada")) aplicarSidebar(true); };
-    h.addEventListener("click", abrir);
-    h.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); abrir(); }
-    });
-  });
-  botaoSidebar.addEventListener("click", () =>
-    aplicarSidebar(sidebar.classList.contains("fechada")));
-  fundo.addEventListener("click", () => aplicarSidebar(false));
-
-  // ---- largura da sidebar: arrastar o divisor (mouse, toque e teclado)
-  const espaco = sidebar.parentElement;
-  const divisorSidebar = document.getElementById("divisor-sidebar");
-  const LARG_MIN = 200, LARG_MAX = 480, ABRIR_EM = 120, FECHAR_EM = 100;
-  function definirLargura(px) {
-    px = Math.round(Math.min(LARG_MAX, Math.max(LARG_MIN, px)));
-    espaco.style.setProperty("--sidebar-w", `${px}px`);
-    divisorSidebar.setAttribute("aria-valuenow", px);
-    return px;
-  }
-  const larguraSalva = parseFloat(ler("clareia:sidebar"));
-  if (larguraSalva) definirLargura(larguraSalva);
-  const soltarSidebar = () => {
-    espaco.classList.remove("arrastando");
-    guardar("clareia:sidebar", parseInt(espaco.style.getPropertyValue("--sidebar-w"), 10) || 272);
-  };
-  // durante o arrastar a sidebar assume qualquer largura (da faixa até o máximo);
-  // ao soltar ela encaixa: faixa, ou no mínimo aberta
-  const LARG_FAIXA = 58, LIMIAR = 130;
-  let larguraArraste = null;
-  divisorSidebar.addEventListener("pointerdown", (e) => {
-    divisorSidebar.setPointerCapture(e.pointerId);
-    espaco.classList.add("arrastando");
-    larguraArraste = sidebar.getBoundingClientRect().width;
-  });
-  divisorSidebar.addEventListener("pointermove", (e) => {
-    if (!divisorSidebar.hasPointerCapture(e.pointerId)) return;
-    const original = parseInt(espaco.style.getPropertyValue("--sidebar-w"), 10) || 272;
-    larguraArraste = Math.min(LARG_MAX, Math.max(LARG_FAIXA, e.clientX - sidebar.getBoundingClientRect().left));
-    sidebar.style.width = `${larguraArraste}px`;
-    aplicarSidebar(larguraArraste >= LIMIAR, false);
-    // meio opaco enquanto menor que o tamanho original e ainda seguro
-    sidebar.classList.toggle("meio", larguraArraste < original);
-  });
-  const soltarArraste = () => {
-    if (larguraArraste === null) return;
-    const larg = larguraArraste;
-    larguraArraste = null;
-    sidebar.classList.remove("meio");
-    sidebar.style.removeProperty("width"); // volta a largura final, animada
-    if (larg < LIMIAR) { aplicarSidebar(false, false); espaco.classList.remove("arrastando"); return; }
-    definirLargura(larg);
-    soltarSidebar();
-  };
-  divisorSidebar.addEventListener("pointerup", soltarArraste);
-  divisorSidebar.addEventListener("pointercancel", soltarArraste);
-  divisorSidebar.addEventListener("dblclick", () => {
-    aplicarSidebar(true);
-    definirLargura(272);
-    soltarSidebar();
-  });
-  divisorSidebar.addEventListener("keydown", (e) => {
-    const passo = e.key === "ArrowLeft" ? -16 : e.key === "ArrowRight" ? 16 : 0;
-    if (!passo) return;
-    e.preventDefault();
-    const larg = sidebar.getBoundingClientRect().width;
-    if (sidebar.classList.contains("fechada")) {
-      if (passo > 0) { aplicarSidebar(true); definirLargura(LARG_MIN); soltarSidebar(); }
-      return;
-    }
-    if (passo < 0 && larg <= LARG_MIN) { aplicarSidebar(false); return; }
-    definirLargura(larg + passo);
-    soltarSidebar();
-  });
 
   // ---- divisor arrastável entre PDF e chat (mouse, toque e teclado)
   function definirDivisao(pct) {
@@ -222,59 +65,8 @@
     soltar();
   });
 
-  // ---- chat
-  const mensagens = document.getElementById("mensagens");
-  function mensagem(texto, quem) {
-    const el = document.createElement("div");
-    el.className = `msg ${quem}`;
-    el.textContent = texto;
-    mensagens.append(el);
-    mensagens.scrollTop = mensagens.scrollHeight;
-    return el;
-  }
-  const form = document.getElementById("form-chat");
-  const campo = document.getElementById("pergunta");
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const texto = campo.value.trim();
-    if (!texto) return;
-    campo.value = "";
-    mensagem(texto, "eu");
-    if (!fatura) {
-      mensagem("Envie uma fatura na página inicial para eu poder ajudar.", "ia");
-      return;
-    }
-    const resposta = mensagem("Pensando", "ia");
-    resposta.classList.add("pensando");
-    const pontos = document.createElement("span");
-    pontos.className = "pontos";
-    pontos.append(...[0, 1, 2].map(() => document.createElement("i")));
-    resposta.append(pontos);
-    try {
-      const resp = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ pergunta: texto, fatura }),
-      });
-      const dados = await resp.json();
-      if (resp.ok) {
-        resposta.classList.add("md");
-        renderMarkdown(dados.resposta, resposta);
-      } else {
-        resposta.textContent = dados.erro;
-      }
-    } catch {
-      resposta.textContent = "Não consegui falar com o assistente agora. Tente de novo em instantes.";
-    }
-    resposta.classList.remove("pensando");
-    mensagens.scrollTop = mensagens.scrollHeight;
-  });
-  campo.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      form.requestSubmit();
-    }
-  });
+  // ---- chat (o resto da página só fala com ele por essa API)
+  const conversa = iniciarChat({ obterFatura: () => fatura });
 
   // ---- ferramentas da sidebar (usam só os dados já extraídos, sem backend)
   let fatura = null;
@@ -304,16 +96,14 @@
   };
 
   function baixarConversa() {
-    const linhas = [...mensagens.children].map((m) =>
-      `${m.classList.contains("eu") ? "Você" : "ClareIA"}: ${m.innerText}`);
-    const url = URL.createObjectURL(new Blob([linhas.join("\n\n")], { type: "text/plain" }));
+    const url = URL.createObjectURL(new Blob([conversa.texto()], { type: "text/plain" }));
     const a = Object.assign(document.createElement("a"), { href: url, download: "conversa-clareia.txt" });
     a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
   function saudacao() {
-    mensagem(fatura
+    conversa.mensagem(fatura
       ? "Oi! Li a sua fatura. Use as ferramentas ao lado ou pergunte o que quiser sobre ela."
       : "Envie uma fatura na página inicial para eu poder ajudar.", "ia");
   }
@@ -324,8 +114,8 @@
       // os resumos aparecem no chat, então garante que ele esteja visível
       if (split.dataset.modo === "pdf") { modo = "chat"; aplicarModo(); }
       const [pergunta, gerar] = respostas[botao.dataset.acao];
-      mensagem(pergunta, "eu");
-      mensagem(fatura ? gerar() : "Ainda não tenho uma fatura para analisar.", "ia");
+      conversa.mensagem(pergunta, "eu");
+      conversa.mensagem(fatura ? gerar() : "Ainda não tenho uma fatura para analisar.", "ia");
     });
   });
 
@@ -548,8 +338,7 @@
   }
 
   async function compartilhar() {
-    const texto = [...mensagens.children].map((m) =>
-      `${m.classList.contains("eu") ? "Você" : "ClareIA"}: ${m.innerText}`).join("\n\n");
+    const texto = conversa.texto();
     try {
       if (navigator.share) { await navigator.share({ title: chat.nome, text: texto }); return; }
       await navigator.clipboard.writeText(texto);
@@ -572,7 +361,7 @@
     if (acao === "renomear") { renomear(); return; }
     fecharMenu();
     if (estreita.matches) aplicarSidebar(false);
-    if (acao === "limpar") { mensagens.replaceChildren(); saudacao(); }
+    if (acao === "limpar") { conversa.limpar(); saudacao(); }
     else if (acao === "baixar") baixarConversa();
     else if (acao === "compartilhar") compartilhar();
     else if (acao === "excluir") excluir();
