@@ -10,44 +10,6 @@ body {
   padding: 0 var(--gutter-2) 1rem;
 }
 
-/* botões do header */
-.header-app {
-  flex-wrap: nowrap;
-  align-items: center;
-  padding-inline: var(--gutter-2);
-}
-.header-esq {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-.header-app nav {
-  flex-wrap: nowrap;
-  gap: 1.5rem;
-}
-.barra-botao,
-.barra-novo {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 2.6rem;
-  min-width: 2.6rem;
-  border: 1px solid #dfe5d9;
-  border-radius: 0.8rem;
-  background: white;
-  color: var(--verde);
-  cursor: pointer;
-  font: inherit;
-  font-weight: 500;
-  text-decoration: none;
-}
-.barra-novo {
-  padding: 0 1rem;
-}
-.barra-botao:hover,
-.barra-novo:hover {
-  background: var(--verde-claro);
-}
 .barra-botao svg,
 .enviar svg {
   width: 1.4rem;
