@@ -1,0 +1,92 @@
+.faq {
+  scroll-margin-top: 5dvh;
+  padding: 3.5rem var(--gutter) 4rem;
+}
+.faq .eyebrow {
+  margin-bottom: 1rem;
+}
+.faq h2 {
+  font-family: 'Manrope', 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: clamp(2.2rem, 3.4vw, 3.6rem);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  max-width: 42rem;
+}
+
+.faq-lista {
+  display: flex;
+  flex-flow: column;
+  gap: 0.8rem;
+  max-width: 56rem;
+  margin-top: 2.5rem;
+}
+
+.faq details {
+  background-color: white;
+  border: 1px solid #dfe5d9;
+  border-radius: 1.4rem;
+  box-shadow: 0 4px 10px rgba(23, 62, 48, 0.08);
+}
+.faq details[open] {
+  border-color: var(--amarelo-escuro);
+}
+
+.faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.3rem 1.6rem;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+.faq summary::after {
+  content: '+';
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: var(--verde-claro);
+  font-size: 1.4rem;
+  line-height: 1;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.faq details[open] summary::after {
+  transform: rotate(45deg);
+  background-color: var(--amarelo);
+}
+.faq summary:hover {
+  color: var(--verde);
+}
+.faq summary:focus-visible {
+  outline: 2px solid var(--amarelo-escuro);
+  outline-offset: 2px;
+  border-radius: 1.4rem;
+}
+
+.faq details p {
+  padding: 0 1.6rem 1.5rem;
+  max-width: 46rem;
+  color: var(--cinza);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  .faq summary {
+    padding: 1.1rem 1.2rem;
+    font-size: 1.15rem;
+  }
+  .faq details p {
+    padding: 0 1.2rem 1.2rem;
+  }
+}
