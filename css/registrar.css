@@ -1,0 +1,173 @@
+.modal-registrar {
+  margin: auto;
+  border: none;
+  border-radius: 16px;
+  width: min(580px, 100vw - 12px);
+  padding: 3.2rem 2.75rem 2.75rem;
+  font-size: 1.3rem;
+  box-shadow: 0 12px 40px rgba(23, 62, 48, 0.25);
+  background-color: #fff;
+  color: var(--texto);
+  position: relative;
+}
+
+.modal-registrar[open] {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.modal-registrar::backdrop {
+  background: rgba(23, 62, 48, 0.5);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: none;
+  color: var(--cinza);
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: var(--texto);
+}
+
+.modal-logo {
+  align-self: center;
+  margin-bottom: 0.5rem;
+}
+
+.google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--verde-claro);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--texto);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.google-btn:hover {
+  background: var(--fundo);
+}
+
+.modal-divisor {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--cinza);
+}
+
+.modal-divisor::before,
+.modal-divisor::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--verde-claro);
+}
+
+#registrarForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.campo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0 0.9rem;
+  border: 1px solid var(--verde-claro);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--texto);
+}
+
+.campo:focus-within {
+  border-color: var(--verde);
+  box-shadow: 0 0 0 3px var(--verde-claro);
+}
+
+.campo input {
+  flex: 1;
+  min-width: 0;
+  padding: 1.1rem 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font: inherit;
+  color: var(--texto);
+}
+
+.campo input::placeholder {
+  color: #9aa59e;
+}
+
+.olho {
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.esqueceu {
+  font-size: 1.1rem;
+  color: var(--cinza);
+}
+
+.esqueceu a,
+.alternar a {
+  color: var(--verde);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--amarelo-escuro);
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 1.1rem;
+  background-color: var(--amarelo);
+  color: var(--verde);
+  font: inherit;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: var(--amarelo-escuro);
+}
+
+.alternar {
+  text-align: center;
+  color: var(--cinza);
+}
