@@ -6,7 +6,7 @@ html {
    e do próximo bloco embaixo */
 .como-funciona {
   --tempo: 6s;
-  scroll-margin-top: 5dvh;
+  scroll-margin-top: 4rem; /* altura do header fixo */
   min-height: 90dvh;
   display: flex;
   flex-flow: column;

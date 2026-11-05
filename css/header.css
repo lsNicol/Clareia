@@ -60,6 +60,26 @@ header nav a.hide{
 .header-home {
   padding-inline: var(--gutter);
 }
+/* na home o header acompanha a rolagem: fica translúcido e compacta um pouco para sobrar espaço pro conteúdo */
+.header-home {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition: padding 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+}
+.header-home .clareia-logo img {
+  transition: height 0.25s ease;
+}
+.header-home.rolou {
+  padding-block: 0.75rem;
+  background-color: rgba(247, 248, 241, 0.85);
+  box-shadow: 0 1px 0 var(--verde-claro), 0 8px 24px rgba(23, 62, 48, 0.08);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.header-home.rolou .clareia-logo img {
+  height: 3.1rem;
+}
 .header-app nav {
   flex-wrap: nowrap;
   gap: 1.5rem;

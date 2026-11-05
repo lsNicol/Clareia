@@ -1,5 +1,5 @@
 .faq {
-  scroll-margin-top: 5dvh;
+  scroll-margin-top: 4rem; /* altura do header fixo */
   padding: 3.5rem var(--gutter) 4rem;
 }
 .faq .eyebrow {
