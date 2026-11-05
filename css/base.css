@@ -15,6 +15,13 @@ html {
   font-size: 93.75%;
 }
 
+/* em telas de notebook o site encolhe sozinho (até 12px = o "80% de zoom"); no monitor grande segue em 15px */
+@media (min-width: 1025px) {
+  html {
+    font-size: clamp(12px, 0.78vw, 15px);
+  }
+}
+
 *,
 *::before,
 *::after {
