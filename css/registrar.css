@@ -2,19 +2,19 @@
   margin: auto;
   border: none;
   border-radius: 16px;
-  width: min(580px, 100vw - 12px);
-  padding: 3.2rem 2.75rem 2.75rem;
-  font-size: 1.3rem;
+  width: min(440px, 100vw - 12px);
+  padding: 2.8rem 2rem 2.4rem;
+  font-size: 1.15rem;
   box-shadow: 0 12px 40px rgba(23, 62, 48, 0.25);
   background-color: #fff;
   color: var(--texto);
-  position: relative;
+  position: fixed; /* mantém o modal na camada de cima, sem pular a rolagem da página */
 }
 
 .modal-registrar[open] {
   display: flex;
   flex-direction: column;
-  gap: 1.6rem;
+  gap: 1.3rem;
 }
 
 .modal-registrar::backdrop {
@@ -51,12 +51,20 @@
   margin-bottom: 0.5rem;
 }
 
+.modal-logo img {
+  height: 4.4rem;
+}
+
+.modal-logo .logo-texto {
+  font-size: 3rem;
+}
+
 .google-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  padding: 1rem 1.2rem;
+  padding: 0.8rem 1.2rem;
   border: 1px solid var(--verde-claro);
   border-radius: 999px;
   background: #fff;
@@ -88,7 +96,7 @@
 #registrarForm {
   display: flex;
   flex-direction: column;
-  gap: 1.4rem;
+  gap: 1.1rem;
 }
 
 .form-group {
@@ -116,7 +124,7 @@
 .campo input {
   flex: 1;
   min-width: 0;
-  padding: 1.1rem 0;
+  padding: 0.85rem 0;
   border: none;
   outline: none;
   background: transparent;
@@ -153,7 +161,7 @@
 
 .submit-btn {
   width: 100%;
-  padding: 1.1rem;
+  padding: 0.85rem;
   background-color: var(--amarelo);
   color: var(--verde);
   font: inherit;
@@ -170,4 +178,9 @@
 .alternar {
   text-align: center;
   color: var(--cinza);
+}
+
+/* trava a rolagem da página enquanto o modal está aberto */
+html:has(dialog[open]) {
+  overflow: hidden;
 }
