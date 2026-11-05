@@ -56,9 +56,9 @@ header nav a.hide{
   align-items: center;
   gap: 1rem;
 }
-/* na home não há botão de sidebar: reserva o espaço dele p/ o "novo" ficar na mesma posição do resultado */
-.clareia-logo + .barra-novo {
-  margin-left: 3.6rem;
+/* na home o header alinha com as laterais do main (--gutter), não com as do app */
+.header-home {
+  padding-inline: var(--gutter);
 }
 .header-app nav {
   flex-wrap: nowrap;
