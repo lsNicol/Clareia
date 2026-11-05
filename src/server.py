@@ -1,5 +1,7 @@
 import os
 import tempfile
+import time
+from collections import defaultdict, deque
 from flask import Flask, request, jsonify, send_from_directory
 import json
 import requests
@@ -7,6 +9,33 @@ from extractPDF import extrair_fatura
 
 RAIZ = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 app = Flask(__name__, static_folder=None)
+app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024  # faturas passam longe disso
+
+# limite simples por IP: {rota: (pedidos, janela em segundos)}
+LIMITES = {"/api/fatura": (10, 60), "/api/chat": (20, 60)}
+historico_pedidos = defaultdict(deque)
+
+def ip_do_cliente():
+    # atrás do cloudflared o IP real vem neste header
+    return request.headers.get("CF-Connecting-IP", request.remote_addr)
+
+@app.before_request
+def limitar_pedidos():
+    limite = LIMITES.get(request.path)
+    if limite is None or request.method != "POST":
+        return
+    maximo, janela = limite
+    agora = time.time()
+    fila = historico_pedidos[(ip_do_cliente(), request.path)]
+    while fila and agora - fila[0] > janela:
+        fila.popleft()
+    if len(fila) >= maximo:
+        return jsonify(erro="Muitos pedidos. Espere um pouco e tente de novo."), 429
+    fila.append(agora)
+
+@app.errorhandler(413)
+def arquivo_grande(_):
+    return jsonify(erro="Arquivo grande demais (máximo 10 MB)."), 413
 
 @app.get("/")
 def index():
@@ -36,7 +65,7 @@ def receber_fatura():
 
 @app.post("/api/chat")
 def clareia_chat():
-    pedido = request.get_json()
+    pedido = request.get_json(silent=True) or {}
     pergunta = pedido.get("pergunta")
     fatura = pedido.get("fatura")
 
@@ -64,4 +93,5 @@ def clareia_chat():
     return jsonify(resposta=texto)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    # padrão só local (cloudflared); HOST=0.0.0.0 libera para a rede
+    app.run(host=os.environ.get("HOST", "127.0.0.1"), port=5000, debug=False)
