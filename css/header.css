@@ -2,14 +2,14 @@ header {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 1rem 2rem;
-  padding: 1rem var(--gutter);
+  gap: var(--space-3) var(--space-5);
+  padding: var(--space-3) var(--gutter);
 }
 
 .clareia-logo {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: var(--space-2);
   text-decoration: none;
 }
 
@@ -19,10 +19,10 @@ header {
 }
 
 .logo-texto {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-manrope);
   font-weight: 800;
-  font-size: 2.4rem;
-  line-height: 1;
+  font-size: var(--font-size-4xl);
+  line-height: var(--leading-none);
   color: var(--verde);
 }
 
@@ -30,12 +30,12 @@ header nav {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1rem 2.6rem;
+  gap: var(--space-3) var(--space-6);
 }
 
 header nav a {
   text-decoration: none;
-  font-size: 1.2rem;
+  font-size: var(--font-size-xl);
   font-weight: 500;
 }
 
@@ -54,7 +54,7 @@ header nav a.hide{
 .header-esq {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-3);
 }
 /* na home o header alinha com as laterais do main (--gutter), não com as do app */
 .header-home {
@@ -71,9 +71,9 @@ header nav a.hide{
   transition: height 0.25s ease;
 }
 .header-home.rolou {
-  padding-block: 0.75rem;
-  background-color: rgba(247, 248, 241, 0.85);
-  box-shadow: 0 1px 0 var(--verde-claro), 0 8px 24px rgba(23, 62, 48, 0.08);
+  padding-block: var(--space-3);
+  background-color: color-mix(in srgb, var(--fundo) 85%, transparent);
+  box-shadow: 0 1px 0 var(--verde-claro), 0 8px 24px color-mix(in srgb, var(--verde) 8%, transparent);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
@@ -82,7 +82,7 @@ header nav a.hide{
 }
 .header-app nav {
   flex-wrap: nowrap;
-  gap: 1.5rem;
+  gap: var(--space-4);
 }
 .barra-botao,
 .barra-novo {
@@ -91,9 +91,9 @@ header nav a.hide{
   justify-content: center;
   height: 2.6rem;
   min-width: 2.6rem;
-  border: 1px solid #dfe5d9;
-  border-radius: 0.8rem;
-  background: white;
+  border: 1px solid var(--borda);
+  border-radius: var(--radius-md);
+  background: var(--branco);
   color: var(--verde);
   cursor: pointer;
   font: inherit;
@@ -101,7 +101,7 @@ header nav a.hide{
   text-decoration: none;
 }
 .barra-novo {
-  padding: 0 1rem;
+  padding: 0 var(--space-3);
 }
 .barra-botao:hover,
 .barra-novo:hover {
@@ -113,9 +113,9 @@ header nav a.login:hover{
 header nav a.sing-up{
   background-color: var(--verde);
   color: var(--fundo);
-  padding: 8px 15px;
+  padding: var(--space-2) var(--space-3);
   border: 1px;
-  border-radius: 15px;
+  border-radius: var(--radius-md);
   text-decoration: none;
 }
 header nav a.sing-up:hover{
@@ -144,7 +144,7 @@ header nav .menu {
   right: 0;
   z-index: 10;
   width: min(640px, 90vw);
-  padding-top: 1rem; /* ponte invisível: o mouse não "sai" ao descer até o painel */
+  padding-top: var(--space-3); /* ponte invisível: o mouse não "sai" ao descer até o painel */
   opacity: 0;
   visibility: hidden;
   transform: translateY(-6px);
@@ -161,23 +161,23 @@ header nav .menu {
 .menu-painel {
   display: grid;
   grid-template-columns: 1.4fr 1fr;
-  gap: 2rem;
-  padding: 2rem;
+  gap: var(--space-5);
+  padding: var(--space-5);
   background-color: var(--fundo);
   border: 1px solid var(--verde-claro);
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(23, 62, 48, 0.15);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 40px color-mix(in srgb, var(--verde) 15%, transparent);
 }
 
 .menu-destaques {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: var(--space-2);
 }
 
 .menu-titulo {
-  margin: 0 0 0.6rem;
-  font-size: 0.85rem;
+  margin: 0 0 var(--space-2);
+  font-size: var(--font-size-sm);
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -187,9 +187,9 @@ header nav .menu {
 header nav .menu-item {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 0.6rem;
-  border-radius: 14px;
+  gap: var(--space-3);
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
   color: var(--texto);
 }
 
@@ -203,7 +203,7 @@ header nav .menu-item:hover {
   flex: none;
   width: 3.6rem;
   height: 3.6rem;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   background-color: var(--verde-claro);
 }
 
@@ -213,13 +213,13 @@ header nav .menu-item:hover .menu-icone {
 
 .menu-item strong {
   display: block;
-  font-size: 1.1rem;
+  font-size: var(--font-size-lg);
   font-weight: 700;
 }
 
 .menu-item small {
   display: block;
-  font-size: 0.9rem;
+  font-size: var(--font-size-sm);
   color: var(--cinza);
 }
 
@@ -227,8 +227,8 @@ header nav .menu-item:hover .menu-icone {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 1.5rem;
-  padding-left: 2rem;
+  gap: var(--space-4);
+  padding-left: var(--space-5);
   border-left: 1px solid var(--verde-claro);
 }
 
@@ -236,14 +236,14 @@ header nav .menu-item:hover .menu-icone {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: var(--space-2);
   padding: 0;
   margin: 0;
 }
 
 .menu-lateral a {
   display: block;
-  padding: 0.5rem 0;
+  padding: var(--space-2) 0;
   font-weight: 600;
   color: var(--texto);
 }
@@ -253,7 +253,7 @@ header nav .menu-item:hover .menu-icone {
 }
 
 .menu-conta {
-  padding-top: 1.5rem !important;
+  padding-top: var(--space-4) !important;
   border-top: 1px solid var(--verde-claro);
 }
 
@@ -276,11 +276,11 @@ header nav .menu-item:hover .menu-icone {
 @media (max-width: 600px){
   .menu-painel {
     grid-template-columns: 1fr;
-    padding: 1.4rem;
+    padding: var(--space-4);
   }
   .menu-lateral {
     padding-left: 0;
-    padding-top: 1.5rem;
+    padding-top: var(--space-4);
     border-left: 0;
     border-top: 1px solid var(--verde-claro);
   }
@@ -289,7 +289,7 @@ header nav .menu-item:hover .menu-icone {
 /* celular */
 @media (max-width: 600px){
   header {
-    padding: 0.8rem var(--gutter);
+    padding: var(--space-3) var(--gutter);
     align-items: center;
     flex-wrap: nowrap;
   }
@@ -297,7 +297,7 @@ header nav .menu-item:hover .menu-icone {
     height: 2.6rem;
   }
   .logo-texto {
-    font-size: 1.8rem;
+    font-size: var(--font-size-3xl);
   }
   .menu-botao img {
     width: 2.6rem;
@@ -306,7 +306,7 @@ header nav .menu-item:hover .menu-icone {
     width: min(26rem, calc(100vw - 2 * var(--gutter)));
   }
   .menu-painel {
-    gap: 1.2rem;
+    gap: var(--space-3);
     max-height: calc(100dvh - 6rem);
     overflow-y: auto;
   }

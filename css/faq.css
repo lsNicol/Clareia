@@ -1,32 +1,32 @@
 .faq {
   scroll-margin-top: 4rem; /* altura do header fixo */
-  padding: 3.5rem var(--gutter) 4rem;
+  padding: var(--space-7) var(--gutter) var(--space-7);
 }
 .faq .eyebrow {
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-3);
 }
 .faq h2 {
-  font-family: 'Manrope', 'Inter', sans-serif;
+  font-family: var(--font-manrope);
   font-weight: 600;
-  font-size: clamp(2.2rem, 3.4vw, 3.6rem);
+  font-size: var(--font-size-title);
   letter-spacing: -0.01em;
-  line-height: 1.15;
+  line-height: var(--leading-tight);
   max-width: 42rem;
 }
 
 .faq-lista {
   display: flex;
   flex-flow: column;
-  gap: 0.8rem;
+  gap: var(--space-3);
   max-width: 56rem;
-  margin-top: 2.5rem;
+  margin-top: var(--space-6);
 }
 
 .faq details {
-  background-color: white;
-  border: 1px solid #dfe5d9;
-  border-radius: 1.4rem;
-  box-shadow: 0 4px 10px rgba(23, 62, 48, 0.08);
+  background-color: var(--branco);
+  border: 1px solid var(--borda);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 10px color-mix(in srgb, var(--verde) 8%, transparent);
 }
 .faq details[open] {
   border-color: var(--amarelo-escuro);
@@ -36,10 +36,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  padding: 1.3rem 1.6rem;
-  font-family: 'Manrope', 'Inter', sans-serif;
-  font-size: 1.3rem;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-4);
+  font-family: var(--font-manrope);
+  font-size: var(--font-size-xl);
   font-weight: 600;
   cursor: pointer;
   list-style: none;
@@ -54,10 +54,10 @@
   place-items: center;
   width: 2rem;
   height: 2rem;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background-color: var(--verde-claro);
-  font-size: 1.4rem;
-  line-height: 1;
+  font-size: var(--font-size-2xl);
+  line-height: var(--leading-none);
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
 .faq details[open] summary::after {
@@ -70,23 +70,23 @@
 .faq summary:focus-visible {
   outline: 2px solid var(--amarelo-escuro);
   outline-offset: 2px;
-  border-radius: 1.4rem;
+  border-radius: var(--radius-lg);
 }
 
 .faq details p {
-  padding: 0 1.6rem 1.5rem;
+  padding: 0 var(--space-4) var(--space-4);
   max-width: 46rem;
   color: var(--cinza);
-  font-size: 1.1rem;
-  line-height: 1.6;
+  font-size: var(--font-size-lg);
+  line-height: var(--leading-relaxed);
 }
 
 @media (max-width: 600px) {
   .faq summary {
-    padding: 1.1rem 1.2rem;
-    font-size: 1.15rem;
+    padding: var(--space-3) var(--space-3);
+    font-size: var(--font-size-lg);
   }
   .faq details p {
-    padding: 0 1.2rem 1.2rem;
+    padding: 0 var(--space-3) var(--space-3);
   }
 }

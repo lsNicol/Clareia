@@ -1,12 +1,12 @@
 .modal-registrar {
   margin: auto;
   border: none;
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   width: min(440px, 100vw - 12px);
-  padding: 2.8rem 2rem 2.4rem;
-  font-size: 1.15rem;
-  box-shadow: 0 12px 40px rgba(23, 62, 48, 0.25);
-  background-color: #fff;
+  padding: var(--space-6) var(--space-5) var(--space-5);
+  font-size: var(--font-size-lg);
+  box-shadow: 0 12px 40px color-mix(in srgb, var(--verde) 25%, transparent);
+  background-color: var(--branco);
   color: var(--texto);
   position: fixed; /* mantém o modal na camada de cima, sem pular a rolagem da página */
 }
@@ -14,20 +14,11 @@
 .modal-registrar[open] {
   display: flex;
   flex-direction: column;
-  gap: 1.3rem;
+  gap: var(--space-4);
 }
 
 .modal-registrar::backdrop {
-  background: rgba(23, 62, 48, 0.5);
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
+  background: color-mix(in srgb, var(--verde) 50%, transparent);
 }
 
 .close-btn {
@@ -48,7 +39,7 @@
 
 .modal-logo {
   align-self: center;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-2);
 }
 
 .modal-logo img {
@@ -56,18 +47,18 @@
 }
 
 .modal-logo .logo-texto {
-  font-size: 3rem;
+  font-size: var(--font-size-5xl);
 }
 
 .google-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  padding: 0.8rem 1.2rem;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-3);
   border: 1px solid var(--verde-claro);
-  border-radius: 999px;
-  background: #fff;
+  border-radius: var(--radius-full);
+  background: var(--branco);
   color: var(--texto);
   font: inherit;
   font-weight: 500;
@@ -81,7 +72,7 @@
 .modal-divisor {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-3);
   color: var(--cinza);
 }
 
@@ -96,23 +87,23 @@
 #registrarForm {
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
+  gap: var(--space-3);
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: var(--space-2);
 }
 
 .campo {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  padding: 0 0.9rem;
+  gap: var(--space-2);
+  padding: 0 var(--space-3);
   border: 1px solid var(--verde-claro);
-  border-radius: 8px;
-  background: #fff;
+  border-radius: var(--radius-sm);
+  background: var(--branco);
   color: var(--texto);
 }
 
@@ -124,7 +115,7 @@
 .campo input {
   flex: 1;
   min-width: 0;
-  padding: 0.85rem 0;
+  padding: var(--space-3) 0;
   border: none;
   outline: none;
   background: transparent;
@@ -133,7 +124,7 @@
 }
 
 .campo input::placeholder {
-  color: #9aa59e;
+  color: var(--cinza);
 }
 
 .olho {
@@ -146,7 +137,7 @@
 }
 
 .esqueceu {
-  font-size: 1.1rem;
+  font-size: var(--font-size-lg);
   color: var(--cinza);
 }
 
@@ -161,13 +152,13 @@
 
 .submit-btn {
   width: 100%;
-  padding: 0.85rem;
+  padding: var(--space-3);
   background-color: var(--amarelo);
   color: var(--verde);
   font: inherit;
   font-weight: 600;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
 }
 
