@@ -1,24 +1,57 @@
 :root {
-  --verde: #173E30;
-  --verde-claro: #E6EDDE;
-  --fundo: #F7F8F1;
-  --amarelo: #F5CE46;
-  --amarelo-escuro: #D1AD36;
-  --texto: #173E30;
-  --cinza: #637168;
+  --color-green-950: #0F2C22;
+  --color-green-900: #173E30;
+  --color-green-200: #E6EDDE;
+  --color-beige-100: #F7F8F1;
+  --color-yellow-100: #FDF0C0;
+  --color-yellow-500: #F5CE46;
+  --color-yellow-700: #F5B800;
+  --color-gray-500: #637168;
+  --color-gray-200: #DFE5D9;
+  --color-white: #FFFFFF;
+
+  --verde: var(--color-green-900);
+  --verde-escuro: var(--color-green-950);
+  --verde-claro: var(--color-green-200);
+  --fundo: var(--color-beige-100);
+  --amarelo-claro: var(--color-yellow-100);
+  --amarelo: var(--color-yellow-500);
+  --amarelo-escuro: var(--color-yellow-700);
+  --texto: var(--color-green-900);
+  --cinza: var(--color-gray-500);
+  --borda: var(--color-gray-200);
+  --branco: var(--color-white);
+
+  --font-size-xs: 0.75rem; --font-size-sm: 0.875rem;  
+  --font-size-base: 1rem; --font-size-lg: 1.125rem;  
+  --font-size-xl: 1.25rem; --font-size-2xl: 1.5rem;
+  --font-size-3xl: 2rem; --font-size-4xl: 2.5rem; --font-size-5xl: 3rem;
+  /* títulos fluidos: crescem com a tela entre um mínimo e um máximo */
+  --font-size-title: clamp(var(--font-size-3xl), 3.4vw, 3.5rem);
+  --font-size-display: clamp(var(--font-size-5xl), 4.2vw, 5rem);
+
+  --leading-none: 1;
+  --leading-tight: 1.25; --leading-snug: 1.375; --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+
+  --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 1rem;
+  --space-4: 1.5rem; --space-5: 2rem; --space-6: 3rem;
+  --space-7: 4rem; --space-8: 8rem;
+
+  --radius-sm: 0.375rem; --radius-md: 0.75rem;
+  --radius-lg: 1.5rem; --radius-xl: 2rem; --radius-full: 9999px;
+
+  --font-sans: 'Inter', sans-serif;
+  --font-manrope: 'Manrope', sans-serif;
+
   --gutter: 5.6vw;
   --gutter-2: clamp(1rem, 2vw, 2rem); /* laterais menores, para telas de app (resultado) */
-}
-
-/* tamanho fixo (15px com a fonte padrão do navegador), assim o zoom (Ctrl +/-) funciona */
-html {
-  font-size: 93.75%;
 }
 
 /* em telas de notebook o site encolhe sozinho (até 12px = o "80% de zoom"); no monitor grande segue em 15px */
 @media (min-width: 1025px) {
   html {
-    font-size: clamp(12px, 0.78vw, 15px);
+    font-size: clamp(12px, 0.8vw, 16px);
   }
 }
 
@@ -38,9 +71,9 @@ body {
   flex-direction: column;
   background-color: var(--fundo);
   color: var(--texto);
-  font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  line-height: 1.5;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  line-height: var(--leading-normal);
 }
 
 img {
