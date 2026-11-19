@@ -19,17 +19,27 @@ togglePassword.addEventListener('click', () => {
 // Alterna entre "Criar conta" e "Entrar"
 alternarLink.addEventListener('click', (e) => {
   e.preventDefault();
-  criando = !criando;
+  configurarModo(!criando);
+});
+
+function configurarModo(criarConta) {
+  criando = criarConta;
   const texto = criando ? 'Criar conta' : 'Entrar';
   titulo.textContent = texto;
   submitBtn.textContent = texto;
   alternarTexto.textContent = criando ? 'Já tem uma conta?' : 'Ainda não tem conta?';
   alternarLink.textContent = criando ? 'Entrar' : 'Criar conta';
-});
+}
 
-openModalBtn.addEventListener('click', (e) => {
-  e.preventDefault();
+window.configurarModalConta = configurarModo;
+window.abrirModalConta = (modoCriarConta = true) => {
+  configurarModo(modoCriarConta);
   modal.showModal();
+};
+
+openModalBtn?.addEventListener('click', (e) => {
+  e.preventDefault();
+  window.abrirModalConta(true);
 });
 
 // Fechar o modal pelo botão "X"
