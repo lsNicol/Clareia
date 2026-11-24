@@ -12,6 +12,8 @@ const emailInput = document.getElementById('email');
 const contaStatus = document.getElementById('conta-status');
 const credenciais = [emailInput, passwordInput];
 let criando = true;
+// resolve a partir do próprio script, para funcionar tanto no index quanto em pages/
+const urlCadastro = new URL('../pages/cadastro.html', document.currentScript.src).href;
 
 togglePassword.addEventListener('click', () => {
   const mostrar = passwordInput.type === 'password';
@@ -37,7 +39,7 @@ function configurarModo(criarConta) {
   submitBtn.textContent = texto;
   alternarTexto.textContent = criando ? 'Já tem uma conta?' : 'Ainda não tem conta?';
   alternarLink.textContent = criando ? 'Entrar' : 'Criar conta';
-  alternarLink.href = criando ? '#entrar' : 'pages/cadastro.html';
+  alternarLink.href = criando ? '#entrar' : urlCadastro;
 }
 
 window.configurarModalConta = configurarModo;
