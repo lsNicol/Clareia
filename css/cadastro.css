@@ -1,295 +1,172 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+.login-link {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--cinza);
 }
-body{
-    font-family:"Open Sans",sans-serif;
-    background:#f8f9fb;
-    color: var(--verde-claro);
+
+.login-link a {
+    color: var(--verde);
+    font-weight: 600;
 }
-.header{
-    height:90px;
-    background:white;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:0 4%;
-    border-bottom:1px solid #ececec;
+
+.cadastro {
+    width: min(44rem, calc(100% - 2 * var(--gutter-2)));
+    margin: var(--space-6) auto;
+    padding: var(--space-6);
+    background: var(--branco);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 8px 35px color-mix(in srgb, var(--verde) 8%, transparent);
 }
-.logo{
-    height:65px;
-    cursor: pointer;
+
+.cadastro h1 {
+    font-family: var(--font-manrope);
+    font-size: var(--font-size-4xl);
+    text-align: center;
 }
-.login-link{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    font-size:16px;
+
+.cadastro .subtitle {
+    margin: var(--space-3) 0 var(--space-6);
+    color: var(--cinza);
+    text-align: center;
 }
-.login-link span{
-    color:#666;
+
+#cadastroForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
 }
-.login-link a{
-    text-decoration:none;
-    color: var(--amarelo-escuro);
-    font-weight:600;
+
+.cadastro .dupla {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
 }
-.login-link a:hover{
-    text-decoration:underline;
+
+.cadastro .campo {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
 }
-.cadastro{
-    width:100%;
-    max-width:700px;
-    margin:60px auto;
-    background:white;
-    padding:45px;
-    border-radius:20px;
-    box-shadow:0 8px 35px rgba(0,0,0,.08);
+
+.cadastro .campo label {
+    margin-bottom: var(--space-2);
+    font-weight: 600;
 }
-.cadastro h1{
-    text-align:center;
-    font-size:38px;
-    color:#1e2d5b;
+
+.cadastro .campo input {
+    width: 100%;
+    min-height: 3.125rem;
+    border: 1px solid var(--borda);
+    border-radius: var(--radius-md);
+    padding-inline: var(--space-3);
+    color: var(--texto);
+    font: inherit;
 }
-.subtitle{
-    text-align:center;
-    color:#666;
-    margin-top:12px;
-    margin-bottom:45px;
-    line-height:24px;
-}
-form{
-    display:flex;
-    flex-direction:column;
-    gap:22px;
-}
-.dupla{
-    display:flex;
-    gap:20px;
-}
-.campo{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-}
-.campo label{
-    margin-bottom:8px;
-    font-size:15px;
-    font-weight:600;
-}
-.campo input{
-    width:100%;
-    height:50px;
-    border:1px solid #d9d9d9;
-    border-radius:12px;
-    padding:0 16px;
-    font-size:16px;
-    outline:none;
-    transition:.2s;
-    height:50px;
-    border:1px solid #d9d9d9;
-    border-radius:12px;
-    padding:0 16px;
-    font-size:16px;
-    outline:none;
-    transition:.2s;
-}
-.campo input:focus{
+
+.cadastro .campo input:focus {
     border-color: var(--verde-escuro);
 }
-.checkbox{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    font-size:15px;
-    color:#666;
-    cursor:pointer;
+
+.cadastro .checkbox {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--cinza);
+    cursor: pointer;
 }
-.checkbox input{
-    width:18px;
-    height:18px;
+
+.cadastro .checkbox input {
+    flex-shrink: 0;
+    width: 1.125rem;
+    height: 1.125rem;
 }
-.criar-conta{
-    height:54px;
-    background:var(--amarelo);
-    color:var(--verde-escuro);
-    border:none;
-    border-radius:14px;
-    font-size:18px;
-    font-weight:600;
-    cursor:pointer;
-    transition:.2s;
+
+.cadastro .criar-conta,
+.cadastro .google {
+    min-height: 3.375rem;
+    border-radius: var(--radius-md);
+    padding-inline: var(--space-3);
+    font: inherit;
+    cursor: pointer;
 }
-.criar-conta:hover{
+
+.cadastro .criar-conta {
+    background: var(--amarelo);
+    color: var(--verde-escuro);
+    border: 0;
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+}
+
+.cadastro .criar-conta:hover {
     background: var(--amarelo-escuro);
 }
-.separator{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin:5px 0;
-    color:#888;
-}
-.separator::before,
-.separator::after{
-    content:"";
-    flex:1;
-    height:1px;
-    background:#ddd;
-}
-.separator span{
-    margin:0 15px;
-}
-.google{
-    height:54px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:12px;
-    background:white;
-    border:1px solid #d9d9d9;
-    border-radius:14px;
-    font-size:16px;
-    cursor:pointer;
-    transition:.2s;
 
+.cadastro .separator {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--cinza);
 }
-.google img{
-    width:22px;
-}
-.google:hover{
 
-    border-color: var(--amarelo-escuro);
-    box-shadow:0 4px 12px rgba(0,0,0,.08);
+.cadastro .separator::before,
+.cadastro .separator::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--borda);
 }
-.password-container{
-    position: relative;
-    width:100%;
-}
-.password-container input{
-    width:100%;
-    height:50px;
-    padding-right:50px;
-}
-.eye-icon{
-    position:absolute;
-    width:22px;
-    height:22px;
-    right:16px;
-    top:50%;
-    transform:translateY(-50%);
-    cursor:pointer;
-}
-.login-modal, .forgot-modal {
-    position: fixed;
-    inset: 0;
+
+.cadastro .google {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0,0,0,.45);
-    backdrop-filter: blur(4px);
-    opacity: 0;
-    visibility: hidden;
-    transition: .25s;
-    z-index: 9999;
+    gap: var(--space-3);
+    background: var(--branco);
+    border: 1px solid var(--borda);
+    color: var(--texto);
 }
-.login-modal.open, .forgot-modal.open {
-    opacity: 1;
-    visibility: visible;
+
+.cadastro .google img {
+    width: 1.375rem;
 }
-.login-modal-box {
-    width: 420px;
-    background: white;
-    border-radius: 20px;
-    padding: 35px;
-    position: relative;
-    transform: translateY(-20px);
-    transition: .25s;
-}
-.login-modal.open .login-modal-box, 
-.forgot-modal.open .login-modal-box {
-    transform: translateY(0);
-}
-.login-close {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    border: none;
-    background: none;
-    cursor: pointer;
-    font-size: 24px;
-    color: #888;
-}
-.login-modal-title {
-    font-family: "Open Sans";
-    font-size: 32px;
-    color: var(--verde-escuro);
-    margin-top: 7px;
-}
-.login-modal-subtitle {
-    font-family: "Open Sans";
-    color: #666;
-    margin-bottom: 30px;
-}
-.login-input {
-    width: 100%;
-    height: 55px;
-    border: 1px solid #d9d9d9;
-    border-radius: 12px;
-    padding: 0 45px 0 18px;
-    font-size: 17px;
-    outline: none;
-    box-sizing: border-box;
-    margin-bottom: 18px;
-}
-.login-input:focus {
+
+.cadastro .google:hover {
     border-color: var(--amarelo-escuro);
 }
 
-.password-container {
+.cadastro .password-container {
     position: relative;
-    align-items: center;
-    display: flex;
-    margin-bottom: 18px;
 }
-.password-container .login-input {
-    margin-bottom: 0;
+
+.cadastro .password-container input {
+    padding-inline-end: var(--space-6);
 }
-.eye-icon {
+
+.cadastro .eye-icon {
     position: absolute;
-    right: 18px;
+    inset-inline-end: var(--space-2);
     top: 50%;
     transform: translateY(-50%);
-    width: 22px;
+    padding: var(--space-2);
+    background: transparent;
+    border: 0;
     cursor: pointer;
 }
-.forgot-password {
-    display: block;
-    text-align: right;
-    margin-bottom: 25px;
-    color: var(--verde-escuro);
-    font-family: "Open Sans";
-    font-size: 15px;
+
+.cadastro .eye-icon img {
+    width: 1.375rem;
 }
-.login-button {
-    width: 100%;
-    height: 55px;
-    border: none;
-    border-radius: 12px;
-    background: var(--amarelo);
-    color: var(--verde-escuro);
-    font-family: "Open Sans";
-    font-size: 18px;
-    cursor: pointer;
-    transition: .2s;
-}
-.login-button:hover {
-    background: var(--amarelo-escuro);
-}
-.input-error{
-    border:2px solid #e53935 !important;
-}
-.input-success{
-    border:2px solid #43a047 !important;
+
+@media (max-width: 36rem) {
+    .cadastro {
+        margin-block: var(--space-4);
+        padding: var(--space-3);
+    }
+
+    .cadastro .dupla {
+        grid-template-columns: minmax(0, 1fr);
+    }
 }

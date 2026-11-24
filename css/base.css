@@ -9,6 +9,7 @@
   --color-gray-500: #637168;
   --color-gray-200: #DFE5D9;
   --color-white: #FFFFFF;
+  --erro: #B42318;
 
   --verde: var(--color-green-900);
   --verde-escuro: var(--color-green-950);
@@ -98,4 +99,15 @@ a {
 :focus-visible {
   outline: 3px solid var(--verde);
   outline-offset: 3px;
+}
+
+.erro-campo {
+  color: var(--erro);
+  font-size: var(--font-size-sm);
+}
+
+.erro-campo:empty,
+#cadastro-status:empty,
+#conta-status:empty {
+  display: none;
 }

@@ -1,142 +1,116 @@
-const eyeIcons=document.querySelectorAll(".eye-icon");
-eyeIcons.forEach(icon=>{
-    icon.addEventListener("click",()=>{
-        const input=icon.previousElementSibling;
-        if(input.type==="password"){
-            input.type="text";
-            icon.src="../img/eye-off.svg";
-        }else{
-            input.type="password";
-            icon.src="../img/eye.svg";
-        }
-    });
+const cadastroForm = document.getElementById('cadastroForm');
+const cadastroStatus = document.getElementById('cadastro-status');
+const campos = [...cadastroForm.querySelectorAll('input[required]')];
+const digitos = (valor) => valor.replace(/\D/g, '');
+
+const mascaras = {
+  cpf: (valor) => valor.slice(0, 11).replace(/^(\d{3})(\d)/, '$1.$2')
+    .replace(/(\.\d{3})(\d)/, '$1.$2')
+    .replace(/(\.\d{3})(\d)/, '$1-$2'),
+  telefone: (valor) => {
+    const numero = valor.slice(0, 11);
+    const prefixo = numero.length === 11 ? 5 : 4;
+    const parteLocal = numero.slice(2);
+    if (numero.length <= 2) return numero;
+    return `(${numero.slice(0, 2)}) ${parteLocal.slice(0, prefixo)}`
+      + (parteLocal.length > prefixo ? `-${parteLocal.slice(prefixo)}` : '');
+  },
+  cep: (valor) => valor.slice(0, 8).replace(/^(\d{5})(\d)/, '$1-$2'),
+  nascimento: (valor) => valor.slice(0, 8)
+    .replace(/^(\d{2})(\d)/, '$1/$2')
+    .replace(/^(\d{2}\/\d{2})(\d)/, '$1/$2'),
+  numero: digitos,
+};
+
+cadastroForm.querySelectorAll('.eye-icon').forEach((botao) => {
+  const senha = botao.previousElementSibling;
+  const icone = botao.querySelector('img');
+  botao.addEventListener('click', () => {
+    const mostrar = senha.type === 'password';
+    senha.type = mostrar ? 'text' : 'password';
+    icone.src = mostrar ? '../img/eye-off.svg' : '../img/eye.svg';
+    botao.setAttribute('aria-label', mostrar ? 'Ocultar senha' : 'Mostrar senha');
+  });
 });
-document.querySelectorAll(".campo input[type='text']").forEach(input=>{
-    const label=input.parentElement.querySelector("label");
-    if(!label)return;
-    if(label.textContent==="Nome"||label.textContent==="Sobrenome"){
-        input.addEventListener("input",()=>{
-            input.value=input.value.replace(/[^a-zA-ZÀ-ÿ\s]/g,"");
-        });
-    }
+
+function validarNascimento(valor) {
+  if (!/^\d{2}\/\d{2}\/\d{4}$/.test(valor)) return 'Informe a data no formato DD/MM/AAAA.';
+  const [dia, mes, ano] = valor.split('/').map(Number);
+  const data = new Date(0);
+  data.setFullYear(ano, mes - 1, dia);
+  const hoje = new Date();
+  if (ano === 0 || data.getFullYear() !== ano || data.getMonth() !== mes - 1
+      || data.getDate() !== dia || data > hoje) {
+    return 'Informe uma data de nascimento válida.';
+  }
+  let idade = hoje.getFullYear() - ano;
+  if (hoje.getMonth() + 1 < mes || (hoje.getMonth() + 1 === mes && hoje.getDate() < dia)) {
+    idade--;
+  }
+  return idade < 13 ? 'É necessário ter pelo menos 13 anos.' : '';
+}
+
+function mensagemDeErro(campo) {
+  if (campo.id === 'termos') return campo.checked ? '' : 'Aceite os termos para continuar.';
+  if (!campo.value.trim()) return 'Preencha este campo.';
+
+  const valor = campo.value;
+  switch (campo.id) {
+    case 'cpf':
+      return digitos(valor).length !== 11 ? 'Informe os 11 dígitos do CPF.' : '';
+    case 'cep':
+      return digitos(valor).length !== 8 ? 'Informe os 8 dígitos do CEP.' : '';
+    case 'telefone':
+      return !/^\d{10,11}$/.test(digitos(valor)) ? 'Informe o telefone com DDD.' : '';
+    case 'nascimento':
+      return validarNascimento(valor);
+    case 'email':
+      return campo.validity.typeMismatch || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor)
+        ? 'Informe um e-mail válido.' : '';
+    case 'password':
+      return valor.length < 6 ? 'Use pelo menos 6 caracteres.' : '';
+    case 'confirm-password':
+      return valor !== cadastroForm.elements.password.value ? 'As senhas não coincidem.' : '';
+    default:
+      return '';
+  }
+}
+
+function mostrarErro(campo, mensagem) {
+  document.getElementById(`${campo.id}-erro`).textContent = mensagem;
+  if (mensagem) campo.setAttribute('aria-invalid', 'true');
+  else campo.removeAttribute('aria-invalid');
+}
+
+cadastroForm.addEventListener('input', ({ target: campo }) => {
+  cadastroStatus.textContent = '';
+  if (!campos.includes(campo)) return;
+  const mascara = mascaras[campo.id];
+  if (mascara) campo.value = mascara(digitos(campo.value));
+  if (campo.hasAttribute('aria-invalid')) mostrarErro(campo, mensagemDeErro(campo));
+
+  const confirmacao = cadastroForm.elements['confirm-password'];
+  if (campo.id === 'password' && confirmacao.value) {
+    mostrarErro(confirmacao, mensagemDeErro(confirmacao));
+  }
 });
-const cpf=document.getElementById("cpf");
-cpf.addEventListener("input",()=>{
-    let valor=cpf.value.replace(/\D/g,"");
-    valor=valor.slice(0,11);
-    valor=valor.replace(/(\d{3})(\d)/,"$1.$2");
-    valor=valor.replace(/(\d{3})(\d)/,"$1.$2");
-    valor=valor.replace(/(\d{3})(\d{1,2})$/,"$1-$2");
-    cpf.value=valor;
+
+cadastroForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  cadastroStatus.textContent = '';
+  let primeiroInvalido;
+  for (const campo of campos) {
+    const mensagem = mensagemDeErro(campo);
+    mostrarErro(campo, mensagem);
+    if (mensagem && !primeiroInvalido) primeiroInvalido = campo;
+  }
+  if (primeiroInvalido) {
+    primeiroInvalido.focus();
+    return;
+  }
+  cadastroStatus.textContent = 'Formulário validado. A criação de contas ainda não está disponível.';
 });
-const telefone=document.getElementById("telefone");
-telefone.addEventListener("input",()=>{
-    let valor=telefone.value.replace(/\D/g,"");
-    valor=valor.slice(0,11);
-    valor=valor.replace(/(\d{2})(\d)/,"($1) $2");
-    valor=valor.replace(/(\d{5})(\d)/,"$1-$2");
-    telefone.value=valor;
-});
-const cep=document.getElementById("cep");
-cep.addEventListener("input",()=>{
-    let valor=cep.value.replace(/\D/g,"");
-    valor=valor.slice(0,8);
-    valor=valor.replace(/(\d{5})(\d)/,"$1-$2");
-    cep.value=valor;
-});
-const numero=document.getElementById("numero");
-numero.addEventListener("input",()=>{
-    numero.value=numero.value.replace(/\D/g,"");
-});
-const email=document.getElementById("email");
-email.addEventListener("blur",()=>{
-    const regex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if(email.value!==""&&!regex.test(email.value)){
-        alert("E-mail inválido.");
-        email.focus();
-    }
-});
-const nascimento=document.getElementById("nascimento");
-nascimento.addEventListener("input",()=>{
-    let valor=nascimento.value.replace(/\D/g,"");
-    valor=valor.slice(0,8);
-    if(valor.length>2)valor=valor.replace(/(\d{2})(\d)/,"$1/$2");
-    if(valor.length>5)valor=valor.replace(/(\d{2})\/(\d{2})(\d)/,"$1/$2/$3");
-    nascimento.value=valor;
-});
-const loginModal=document.querySelector(".login-modal");
-const forgotModal=document.querySelector(".forgot-modal");
-const openLogin=document.getElementById("open-login");
-const closeLogin=document.querySelector(".login-close");
-const forgotButton=document.querySelector(".forgot-password");
-const forgotClose=document.querySelector(".forgot-close");
-openLogin.addEventListener("click",e=>{
-    e.preventDefault();
-    loginModal.classList.add("open");
-});
-closeLogin.addEventListener("click",()=>{
-    loginModal.classList.remove("open");
-});
-loginModal.addEventListener("click",e=>{
-    if(e.target===loginModal){
-        loginModal.classList.remove("open");
-    }
-});
-forgotButton.addEventListener("click",e=>{
-    e.preventDefault();
-    loginModal.classList.remove("open");
-    forgotModal.classList.add("open");
-});
-forgotClose.addEventListener("click",()=>{
-    forgotModal.classList.remove("open");
-});
-forgotModal.addEventListener("click",e=>{
-    if(e.target===forgotModal){
-        forgotModal.classList.remove("open");
-    }
-});
-const form=document.querySelector("form");
-form.addEventListener("submit",e=>{
-    e.preventDefault();
-    const obrigatorios=["cpf","nascimento","email","telefone","cep","numero","password","confirm-password"];
-    for(const id of obrigatorios){
-        const campo=document.getElementById(id);
-        if(campo.value.trim()===""){
-            alert("Preencha todos os campos obrigatórios.");
-            campo.focus();
-            return;
-        }
-    }
-    const senha=document.getElementById("password");
-    const confirmar=document.getElementById("confirm-password");
-    if(senha.value!==confirmar.value){
-        alert("As senhas não coincidem.");
-        confirmar.focus();
-        return;
-    }
-    const termos=document.getElementById("termos");
-    if(!termos.checked){
-        alert("Você deve aceitar os Termos de Uso.");
-        termos.focus();
-        return;
-    }
-    const partes=nascimento.value.split("/");
-    if(partes.length!==3){
-        alert("Data de nascimento inválida.");
-        nascimento.focus();
-        return;
-    }
-    const data=new Date(partes[2],partes[1]-1,partes[0]);
-    const hoje=new Date();
-    let idade=hoje.getFullYear()-data.getFullYear();
-    const mes=hoje.getMonth()-data.getMonth();
-    if(mes<0||(mes===0&&hoje.getDate()<data.getDate())){
-        idade--;
-    }
-    if(idade<13){
-        alert("É necessário ter pelo menos 13 anos.");
-        nascimento.focus();
-        return;
-    }
-    alert("Cadastro válido.");
+
+cadastroForm.querySelector('[data-google]').addEventListener('click', () => {
+  cadastroStatus.textContent = 'O acesso com Google ainda não está disponível.';
 });
