@@ -1,0 +1,172 @@
+.login-link {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--cinza);
+}
+
+.login-link a {
+    color: var(--verde);
+    font-weight: 600;
+}
+
+.cadastro {
+    width: min(44rem, calc(100% - 2 * var(--gutter-2)));
+    margin: var(--space-6) auto;
+    padding: var(--space-6);
+    background: var(--branco);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 8px 35px color-mix(in srgb, var(--verde) 8%, transparent);
+}
+
+.cadastro h1 {
+    font-family: var(--font-manrope);
+    font-size: var(--font-size-4xl);
+    text-align: center;
+}
+
+.cadastro .subtitle {
+    margin: var(--space-3) 0 var(--space-6);
+    color: var(--cinza);
+    text-align: center;
+}
+
+#cadastroForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.cadastro .dupla {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+}
+
+.cadastro .campo {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.cadastro .campo label {
+    margin-bottom: var(--space-2);
+    font-weight: 600;
+}
+
+.cadastro .campo input {
+    width: 100%;
+    min-height: 3.125rem;
+    border: 1px solid var(--borda);
+    border-radius: var(--radius-md);
+    padding-inline: var(--space-3);
+    color: var(--texto);
+    font: inherit;
+}
+
+.cadastro .campo input:focus {
+    border-color: var(--verde-escuro);
+}
+
+.cadastro .checkbox {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--cinza);
+    cursor: pointer;
+}
+
+.cadastro .checkbox input {
+    flex-shrink: 0;
+    width: 1.125rem;
+    height: 1.125rem;
+}
+
+.cadastro .criar-conta,
+.cadastro .google {
+    min-height: 3.375rem;
+    border-radius: var(--radius-md);
+    padding-inline: var(--space-3);
+    font: inherit;
+    cursor: pointer;
+}
+
+.cadastro .criar-conta {
+    background: var(--amarelo);
+    color: var(--verde-escuro);
+    border: 0;
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+}
+
+.cadastro .criar-conta:hover {
+    background: var(--amarelo-escuro);
+}
+
+.cadastro .separator {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--cinza);
+}
+
+.cadastro .separator::before,
+.cadastro .separator::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--borda);
+}
+
+.cadastro .google {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-3);
+    background: var(--branco);
+    border: 1px solid var(--borda);
+    color: var(--texto);
+}
+
+.cadastro .google img {
+    width: 1.375rem;
+}
+
+.cadastro .google:hover {
+    border-color: var(--amarelo-escuro);
+}
+
+.cadastro .password-container {
+    position: relative;
+}
+
+.cadastro .password-container input {
+    padding-inline-end: var(--space-6);
+}
+
+.cadastro .eye-icon {
+    position: absolute;
+    inset-inline-end: var(--space-2);
+    top: 50%;
+    transform: translateY(-50%);
+    padding: var(--space-2);
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+.cadastro .eye-icon img {
+    width: 1.375rem;
+}
+
+@media (max-width: 36rem) {
+    .cadastro {
+        margin-block: var(--space-4);
+        padding: var(--space-3);
+    }
+
+    .cadastro .dupla {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}

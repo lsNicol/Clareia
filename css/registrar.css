@@ -175,3 +175,8 @@
 html:has(dialog[open]) {
   overflow: hidden;
 }
+
+.modal-registrar {
+  max-height: calc(100dvh - 2 * var(--space-2));
+  overflow-y: auto;
+}
