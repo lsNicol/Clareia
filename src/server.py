@@ -1,9 +1,9 @@
+import json
 import os
 import tempfile
 import time
 from collections import defaultdict, deque
-from flask import Flask, request, jsonify, send_from_directory
-import json
+from flask import Flask, Response, request, jsonify, send_from_directory
 import requests
 from extractPDF import extrair_fatura
 
@@ -63,6 +63,36 @@ def receber_fatura():
 
     return jsonify(dados)
 
+def resumir_fatura(fatura):
+    # texto enxuto em vez do JSON: menos tokens para o modelo ler = resposta mais rápida
+    campos = {"valor": "R$", "kwh": "kWh", "preco_unit": "preço unit.", "icms": "ICMS", "pis_cofins": "PIS/COFINS"}
+    itens = "\n".join(
+        f"- {i['descricao']}: " + ", ".join(f"{nome} {i[c]}" for c, nome in campos.items() if i.get(c))
+        for i in fatura["itens"])
+    historico = ", ".join(f"{m['mes']} {m['kwh']}" for m in fatura["historico"])
+    return (f"Itens (valor negativo é desconto; TOTAL é o valor a pagar):\n{itens}\n"
+            f"Consumo por mês em kWh: {historico}\n"
+            f"Saldo de geração: {fatura['saldo_geracao_kwh']} kWh")
+
+def repassar_resposta(resp):
+    # uma linha JSON por pedaço: {"parte": "..."} ou {"erro": "..."}
+    linha = lambda **dados: json.dumps(dados, ensure_ascii=False) + "\n"
+    try:
+        with resp:  # se o navegador desistir, fecha a conexão e o Ollama para de gerar
+            for bruto in resp.iter_lines():
+                if not bruto:
+                    continue
+                pedaco = json.loads(bruto)
+                if "error" in pedaco:
+                    break
+                if pedaco["message"]["content"]:
+                    yield linha(parte=pedaco["message"]["content"])
+                if pedaco["done"]:
+                    return
+    except requests.RequestException:
+        pass
+    yield linha(erro="A resposta foi interrompida. Tente de novo.")
+
 @app.post("/api/chat")
 def clareia_chat():
     pedido = request.get_json(silent=True) or {}
@@ -74,23 +104,25 @@ def clareia_chat():
     elif not fatura:
         return jsonify(erro="Não foi possível ler a sua fatura."), 400
     
-    fatura_filtrada = {
-        "itens": fatura["itens"],
-        "historico": fatura["historico"],
-        "saldo_geracao_kwh": fatura["saldo_geracao_kwh"],
-    }
-
     mensagens = [
-        {"role": "system", "content": "Você é a ClareIA, uma assistente de faturas de energia. Use linguagem simples e use os dados abaixo:\n" + json.dumps(fatura_filtrada, ensure_ascii=False)},
+        {"role": "system", "content": "Você é a ClareIA, uma assistente de faturas de energia. Responda em poucas frases, com linguagem simples, usando os dados abaixo.\n" + resumir_fatura(fatura)},
         {"role": "user", "content": pergunta},
     ]
     try:
-        resp = requests.post("http://localhost:11434/api/chat", json={"model": "qwen3:8b", "messages": mensagens, "stream":False}, timeout=120)
+        resp = requests.post("http://localhost:11434/api/chat", json={
+            "model": "qwen3.5:4b",
+            "messages": mensagens,
+            "stream": True,
+            "think": False,
+            "keep_alive": "30m",  # não descarrega o modelo entre as perguntas
+            "options": {"num_thread": 10},  # o padrão do Ollama usa só 2 neste notebook
+        }, stream=True, timeout=120)
+        resp.raise_for_status()  # ex.: modelo não instalado
     except requests.RequestException:
         return jsonify(erro="Assistente ClareIA Offline"), 503
 
-    texto = resp.json()["message"]["content"]
-    return jsonify(resposta=texto)
+    # x-ndjson: o cloudflared repassa na hora, sem esperar a resposta inteira
+    return Response(repassar_resposta(resp), mimetype="application/x-ndjson")
 
 if __name__ == "__main__":
     # padrão só local (cloudflared); HOST=0.0.0.0 libera para a rede

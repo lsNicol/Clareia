@@ -25,6 +25,27 @@ export function iniciarChat({ obterFatura }) {
       `${m.classList.contains("eu") ? "Você" : "ClareIA"}: ${m.innerText}`).join("\n\n");
   }
 
+  // lê a resposta linha a linha (um JSON por linha) conforme o servidor envia
+  async function* linhas(corpo) {
+    const leitor = corpo.pipeThrough(new TextDecoderStream()).getReader();
+    let resto = "";
+    for (;;) {
+      const { value, done } = await leitor.read();
+      if (done) return;
+      const partes = (resto + value).split("\n");
+      resto = partes.pop(); // a última pode ter chegado pela metade
+      for (const parte of partes) yield JSON.parse(parte);
+    }
+  }
+
+  // redesenha a resposta a cada pedaço; só rola se a pessoa já estava no fim
+  function atualizar(el, desenhar) {
+    const noFim = mensagens.scrollHeight - mensagens.scrollTop - mensagens.clientHeight < 40;
+    desenhar();
+    el.classList.remove("pensando");
+    if (noFim) mensagens.scrollTop = mensagens.scrollHeight;
+  }
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const pergunta = campo.value.trim();
@@ -48,18 +69,25 @@ export function iniciarChat({ obterFatura }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ pergunta, fatura }),
       });
-      const dados = await resp.json();
-      if (resp.ok) {
-        resposta.classList.add("md");
-        renderMarkdown(dados.resposta, resposta);
-      } else {
-        resposta.textContent = dados.erro;
+      if (!resp.ok) {
+        const { erro } = await resp.json();
+        atualizar(resposta, () => resposta.textContent = erro);
+        return;
       }
+      let texto = "";
+      for await (const { parte, erro } of linhas(resp.body)) {
+        if (erro) texto += `\n\n_${erro}_`;
+        else texto += parte;
+        atualizar(resposta, () => {
+          resposta.classList.add("md");
+          renderMarkdown(texto, resposta);
+        });
+      }
+      if (!texto) throw new Error("resposta vazia");
     } catch {
-      resposta.textContent = "Não consegui falar com o assistente agora. Tente de novo em instantes.";
+      atualizar(resposta, () =>
+        resposta.textContent = "Não consegui falar com o assistente agora. Tente de novo em instantes.");
     }
-    resposta.classList.remove("pensando");
-    mensagens.scrollTop = mensagens.scrollHeight;
   });
   campo.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
